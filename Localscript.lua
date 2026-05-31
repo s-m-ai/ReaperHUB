@@ -1,4 +1,4 @@
--- Pumpkitz Hub 🎃 V0.9.0 | External Hitbox Expander + Delta Optimized
+-- Pumpkitz Hub 🎃 V0.9.1 | Unanchor Part Puller + Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -15,7 +15,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V09_0"
+		screenGui.Name = "PumpkitzHub_V09_1"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -63,7 +63,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V0.9.0"
+		title.Text = "Pumpkitz Hub 🎃 V0.9.1"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -162,7 +162,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V09_0"
+		tpScreenGui.Name = "PumpkitzHub_TP_V09_1"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -454,35 +454,18 @@ task.spawn(function()
 				createToggleBtn(contentScroll, "แสดง Hitbox 👁️", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleShowHitbox)
 				createToggleBtn(contentScroll, "ล็อกหัวใกล้สุด (LOS)", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleAimlock)
 				
-				-- === EXTERNAL HITBOX EXPANDER BUTTON ===
 				local hitboxExpBtn = Instance.new("TextButton", contentScroll)
-				hitboxExpBtn.Size = UDim2.new(0.95, 0, 0, 45)
-				hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
-				hitboxExpBtn.BorderSizePixel = 0
-				hitboxExpBtn.Text = "ขยายhitbox"
-				hitboxExpBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-				hitboxExpBtn.TextSize = 15
-				hitboxExpBtn.Font = Enum.Font.GothamBold
-				hitboxExpBtn.Active = true
+				hitboxExpBtn.Size = UDim2.new(0.95, 0, 0, 45); hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); hitboxExpBtn.BorderSizePixel = 0
+				hitboxExpBtn.Text = "ขยายhitbox"; hitboxExpBtn.TextColor3 = Color3.fromRGB(255, 255, 255); hitboxExpBtn.TextSize = 15; hitboxExpBtn.Font = Enum.Font.GothamBold; hitboxExpBtn.Active = true
 				Instance.new("UICorner", hitboxExpBtn).CornerRadius = UDim.new(0, 8)
-				
 				hitboxExpBtn.MouseButton1Click:Connect(function()
-					hitboxExpBtn.Text = "⏳ กำลังโหลด..."
-					hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-					task.spawn(function()
-						pcall(function()
-							loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Hitbox-Expander-224681"))()
-						end)
-						task.wait(1.5)
-						if hitboxExpBtn and hitboxExpBtn.Parent then
-							hitboxExpBtn.Text = "ขยายhitbox"
-							hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
-						end
-					end)
+					hitboxExpBtn.Text = "⏳ กำลังโหลด..."; hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Hitbox-Expander-224681"))() end); task.wait(1.5); if hitboxExpBtn and hitboxExpBtn.Parent then hitboxExpBtn.Text = "ขยายhitbox"; hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
 			elseif name == "🤡 แกล้ง" then
 				btnJoke.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnJoke.TextColor3 = Color3.fromRGB(255, 180, 80)
+				
 				local flingBtn = Instance.new("TextButton", contentScroll)
 				flingBtn.Size = UDim2.new(0.95, 0, 0, 45); flingBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); flingBtn.BorderSizePixel = 0
 				flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"; flingBtn.TextColor3 = Color3.fromRGB(255, 255, 255); flingBtn.TextSize = 15; flingBtn.Font = Enum.Font.GothamBold; flingBtn.Active = true
@@ -491,9 +474,38 @@ task.spawn(function()
 					flingBtn.Text = "⏳ กำลังโหลด..."; flingBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ultimate-fling-gui-228952"))() end); task.wait(1.5); if flingBtn and flingBtn.Parent then flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"; flingBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
-				local note = Instance.new("TextLabel", contentScroll); note.Size = UDim2.new(0.95, 0, 0, 20); note.BackgroundTransparency = 1
-				note.Text = "(ใช้ได้เฉพาะแมพที่ตัวชนกันได้)"; note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 12; note.Font = Enum.Font.GothamSemibold
-				note.TextXAlignment = Enum.TextXAlignment.Center; note.TextWrapped = true
+				
+				-- === UNANCHOR PART PULLER BUTTON ===
+				local unanchorBtn = Instance.new("TextButton", contentScroll)
+				unanchorBtn.Size = UDim2.new(0.95, 0, 0, 45)
+				unanchorBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				unanchorBtn.BorderSizePixel = 0
+				unanchorBtn.Text = "ดึงพาร์ทที่ไม่ Anchor"
+				unanchorBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+				unanchorBtn.TextSize = 15
+				unanchorBtn.Font = Enum.Font.GothamBold
+				unanchorBtn.Active = true
+				Instance.new("UICorner", unanchorBtn).CornerRadius = UDim.new(0, 8)
+				
+				unanchorBtn.MouseButton1Click:Connect(function()
+					unanchorBtn.Text = "⏳ กำลังโหลด..."
+					unanchorBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					task.spawn(function()
+						pcall(function()
+							loadstring(game:HttpGet("https://rawscripts.net/raw/Natural-Disaster-Survival-Super-ring-V4-24296"))()
+						end)
+						task.wait(1.5)
+						if unanchorBtn and unanchorBtn.Parent then
+							unanchorBtn.Text = "ดึงพาร์ทที่ไม่ Anchor"
+							unanchorBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+						end
+					end)
+				end)
+				
+				local note = Instance.new("TextLabel", contentScroll); note.Size = UDim2.new(0.95, 0, 0, 30); note.BackgroundTransparency = 1
+				note.Text = "⚠️ ใช้ในเกมที่เกี่ยวข้องเท่านั้น:\n• Natural Disaster Survival\n• เกมที่มีพาร์ทไม่ Anchor\nหากกดแล้วไม่เกิดอะไรขึ้น อาจเป็นเพราะ:\n• ไม่ใช่เกมที่เหมาะสม\n• สคริปต์อัปเดตหรือล่ม"
+				note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 11; note.Font = Enum.Font.GothamSemibold
+				note.TextXAlignment = Enum.TextXAlignment.Left; note.TextWrapped = true
 				
 			elseif name == "🌐 สคริปต์เกมอื่น" then
 				btnOther.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnOther.TextColor3 = Color3.fromRGB(255, 180, 80)
@@ -572,7 +584,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.0] โหลดสำเร็จ | External Hitbox Expander Added | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V0.9.1] โหลดสำเร็จ | Unanchor Part Puller Added | Delta Optimized")
 	end
 
 	-- === LOADING SCREEN ===
@@ -593,7 +605,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.0 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.1 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
