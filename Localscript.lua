@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V0.9.4 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Invisible Button Added
+-- Pumpkitz Hub 🎃 V0.9.5 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🆕 Update: +1 Speed Keyboard Escape Added
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V09_4"
+		screenGui.Name = "PumpkitzHub_V09_5"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -65,7 +65,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V0.9.4"
+		title.Text = "Pumpkitz Hub 🎃 V0.9.5"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -164,7 +164,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V09_4"
+		tpScreenGui.Name = "PumpkitzHub_TP_V09_5"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -581,6 +581,33 @@ task.spawn(function()
 				
 			elseif name == "🌐 สคริปต์เกมอื่น" then
 				btnOther.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnOther.TextColor3 = Color3.fromRGB(255, 180, 80)
+				
+				-- 🆕 NEW: +1 Speed Keyboard Escape Button
+				local speedEscBtn = Instance.new("TextButton", contentScroll)
+				speedEscBtn.Size = UDim2.new(0.95, 0, 0, 45)
+				speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				speedEscBtn.BorderSizePixel = 0
+				speedEscBtn.Text = "+1 speed keyboard escape"
+				speedEscBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+				speedEscBtn.TextSize = 14
+				speedEscBtn.Font = Enum.Font.GothamBold
+				speedEscBtn.Active = true
+				Instance.new("UICorner", speedEscBtn).CornerRadius = UDim.new(0, 8)
+				speedEscBtn.MouseButton1Click:Connect(function()
+					speedEscBtn.Text = "⏳ กำลังโหลด..."
+					speedEscBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					task.spawn(function()
+						pcall(function()
+							loadstring(game:HttpGet("https://pastefy.app/bYadmc9a/raw"))()
+						end)
+						task.wait(1.5)
+						if speedEscBtn and speedEscBtn.Parent then
+							speedEscBtn.Text = "+1 speed keyboard escape"
+							speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+						end
+					end)
+				end)
+				
 				local mm2Btn = Instance.new("TextButton", contentScroll); mm2Btn.Size = UDim2.new(0.95, 0, 0, 45); mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); mm2Btn.BorderSizePixel = 0
 				mm2Btn.Text = "MM2"; mm2Btn.TextColor3 = Color3.fromRGB(255, 255, 255); mm2Btn.TextSize = 15; mm2Btn.Font = Enum.Font.GothamBold; mm2Btn.Active = true; Instance.new("UICorner", mm2Btn).CornerRadius = UDim.new(0, 8)
 				mm2Btn.MouseButton1Click:Connect(function() mm2Btn.Text = "⏳ กำลังโหลด..."; mm2Btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/M4VOWJ8IAKSR5WFRCCJ7AW5IW/ScrFr/refs/heads/main/MM2'))() end); task.wait(1.5); if mm2Btn and mm2Btn.Parent then mm2Btn.Text = "MM2"; mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
@@ -606,7 +633,7 @@ task.spawn(function()
 				btnUpdate.BackgroundColor3 = Color3.fromRGB(50, 15, 5); btnUpdate.TextColor3 = Color3.fromRGB(255, 220, 150)
 				
 				local updateFrame = Instance.new("Frame", contentScroll)
-				updateFrame.Size = UDim2.new(0.95, 0, 0, 200)
+				updateFrame.Size = UDim2.new(0.95, 0, 0, 220)
 				updateFrame.BackgroundColor3 = Color3.fromRGB(30, 10, 3)
 				updateFrame.BorderSizePixel = 0
 				Instance.new("UICorner", updateFrame).CornerRadius = UDim.new(0, 8)
@@ -625,7 +652,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V0.9.4"
+				versionLbl.Text = "เวอร์ชัน: V0.9.5"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -642,10 +669,10 @@ task.spawn(function()
 				dateLbl.TextXAlignment = Enum.TextXAlignment.Left
 				
 				local changelogLbl = Instance.new("TextLabel", updateFrame)
-				changelogLbl.Size = UDim2.new(1, -20, 0, 75)
+				changelogLbl.Size = UDim2.new(1, -20, 0, 95)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.4:\n• เพิ่มปุ่ม 'ล่องหน' ในหมวด 👤 player\n  → กดเพื่อโหลดสคริปต์ทำให้ตัวละครล่องหน\n• ปรับปรุงระบบโหลดสคริปต์ภายนอกให้เสถียรขึ้น"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.5:\n• เพิ่มปุ่ม '+1 speed keyboard escape' ในหมวด 🌐 สคริปต์เกมอื่น\n  → กดเพื่อโหลดสคริปต์เพิ่มความเร็วคีย์บอร์ด (Esc)\n• ปรับปรุง UI ให้รองรับปุ่มใหม่โดยไม่เลื่อนเกิน"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -718,7 +745,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.4] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V0.9.5] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -832,7 +859,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.4 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.5 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
