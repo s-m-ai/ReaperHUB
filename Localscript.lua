@@ -1,4 +1,4 @@
--- ReaperHUB 💀 V0.8 | External Scripts Hub + MM2 Loader | Delta Optimized
+-- ReaperHUB 💀 V0.8 | Multi-Game Script Hub + Zombie Arena Loader | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -465,12 +465,12 @@ task.spawn(function()
 		elseif name == "🌐 สคริปต์เกมอื่น" then
 			btnOther.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnOther.TextColor3 = Color3.fromRGB(255, 80, 80)
 			
-			-- === MM2 SCRIPT BUTTON (Somtank) ===
+			-- MM2 Script Button (Somtank)
 			local mm2Btn = Instance.new("TextButton", contentScroll)
 			mm2Btn.Size = UDim2.new(0.95, 0, 0, 45)
 			mm2Btn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
 			mm2Btn.BorderSizePixel = 0
-			mm2Btn.Text = "สคริปต์MM2ของSomtank"
+			mm2Btn.Text = "สคริปต์ MM2"
 			mm2Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
 			mm2Btn.TextSize = 15
 			mm2Btn.Font = Enum.Font.GothamBold
@@ -486,15 +486,42 @@ task.spawn(function()
 					end)
 					task.wait(1.5)
 					if mm2Btn and mm2Btn.Parent then
-						mm2Btn.Text = "สคริปต์MM2ของSomtank"
+						mm2Btn.Text = "สคริปต์ MM2"
 						mm2Btn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
 					end
 				end)
 			end)
 			
+			-- === ZOMBIE ARENA SCRIPT BUTTON ===
+			local zombieBtn = Instance.new("TextButton", contentScroll)
+			zombieBtn.Size = UDim2.new(0.95, 0, 0, 45)
+			zombieBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+			zombieBtn.BorderSizePixel = 0
+			zombieBtn.Text = "สคริปต์ Survive zombie arena"
+			zombieBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			zombieBtn.TextSize = 15
+			zombieBtn.Font = Enum.Font.GothamBold
+			zombieBtn.Active = true
+			Instance.new("UICorner", zombieBtn).CornerRadius = UDim.new(0, 8)
+			
+			zombieBtn.MouseButton1Click:Connect(function()
+				zombieBtn.Text = "⏳ กำลังโหลด..."
+				zombieBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+				task.spawn(function()
+					pcall(function()
+						loadstring(game:HttpGet("https://raw.githubusercontent.com/VoidDeveloper67/Void-Hub/refs/heads/main/VoidHub.lua", true))()
+					end)
+					task.wait(1.5)
+					if zombieBtn and zombieBtn.Parent then
+						zombieBtn.Text = "สคริปต์ Survive zombie arena"
+						zombieBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+					end
+				end)
+			end)
+			
 			local note = Instance.new("TextLabel", contentScroll)
-			note.Size = UDim2.new(0.95, 0, 0, 35); note.BackgroundTransparency = 1
-			note.Text = "⚠️ ใช้ในเกม Murder Mystery 2 เท่านั้น\nหากกดแล้วไม่เกิดอะไรขึ้น อาจเป็นเพราะ:\n• ไม่ใช่เกม MM2\n• สคริปต์อัปเดตหรือล่ม"
+			note.Size = UDim2.new(0.95, 0, 0, 45); note.BackgroundTransparency = 1
+			note.Text = "⚠️ ใช้ในเกมที่เกี่ยวข้องเท่านั้น:\n• Survive Zombie Arena\n• Void Hub Supported Games\nหากกดแล้วไม่เกิดอะไรขึ้น อาจเป็นเพราะ:\n• ไม่ใช่เกมที่เหมาะสม\n• สคริปต์อัปเดตหรือล่ม"
 			note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 11; note.Font = Enum.Font.GothamSemibold
 			note.TextXAlignment = Enum.TextXAlignment.Left; note.TextWrapped = true
 		end
@@ -552,6 +579,6 @@ task.spawn(function()
 		if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false) end
 	end)
 
-	print("[ReaperHUB 💀 V0.8] โหลดสำเร็จ | MM2 Script Loader Added | Delta Optimized")
+	print("[ReaperHUB 💀 V0.8] โหลดสำเร็จ | Zombie Arena Script Added | Delta Optimized")
 end)
 
