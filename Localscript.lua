@@ -1,4 +1,4 @@
--- ReaperHUB 💀 V0.8.1 | Infinite Jump + Script Names Updated | Delta Optimized
+-- ReaperHUB 💀 V0.8.2 | Infinite Double-Jump + Script Names Updated | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -12,7 +12,7 @@ task.spawn(function()
 
 	-- === MAIN GUI CORE ===
 	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "ReaperHUB_V08_1"
+	screenGui.Name = "ReaperHUB_V08_2"
 	screenGui.ResetOnSpawn = false
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	screenGui.IgnoreGuiInset = true
@@ -61,7 +61,7 @@ task.spawn(function()
 	title.Size = UDim2.new(1, -85, 1, 0)
 	title.Position = UDim2.new(0, 12, 0, 0)
 	title.BackgroundTransparency = 1
-	title.Text = "ReaperHUB 💀 V0.8.1"
+	title.Text = "ReaperHUB 💀 V0.8.2"
 	title.TextColor3 = Color3.fromRGB(255, 255, 255)
 	title.TextSize = 18
 	title.Font = Enum.Font.GothamBold
@@ -161,7 +161,7 @@ task.spawn(function()
 
 	-- === INDEPENDENT TELEPORT GUI ===
 	local tpScreenGui = Instance.new("ScreenGui")
-	tpScreenGui.Name = "ReaperHUB_TP_V08_1"
+	tpScreenGui.Name = "ReaperHUB_TP_V08_2"
 	tpScreenGui.ResetOnSpawn = false
 	tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	tpScreenGui.IgnoreGuiInset = true
@@ -348,50 +348,35 @@ task.spawn(function()
 		end
 	end
 
-	-- === INFINITE JUMP SYSTEM (Hold to Spam + Height Scale) ===
+	-- === INFINITE DOUBLE-JUMP SYSTEM ===
 	local infJumpActive = false
 	local infJumpConn = nil
-	local jumpHeld = false
-	local originalJumpPower = 50
-	local jumpHoldTime = 0
-
-	local jumpBeganConn = UserInputService.InputBegan:Connect(function(input, gameProcessed)
-		if not gameProcessed and infJumpActive and (input.KeyCode == Enum.KeyCode.Space or input.UserInputType == Enum.UserInputType.Touch) then
-			jumpHeld = true
-		end
-	end)
-	local jumpEndedConn = UserInputService.InputEnded:Connect(function(input)
-		if input.KeyCode == Enum.KeyCode.Space or input.UserInputType == Enum.UserInputType.Touch then
-			jumpHeld = false
-			jumpHoldTime = 0
-			if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
-				localPlayer.Character.Humanoid.JumpPower = originalJumpPower
-			end
-		end
-	end)
+	local jumpDebounce = false
 
 	local function toggleInfJump(state)
 		infJumpActive = state
 		if infJumpConn then infJumpConn:Disconnect(); infJumpConn = nil end
 		if state then
-			if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
-				originalJumpPower = localPlayer.Character.Humanoid.JumpPower
-			end
-			infJumpConn = RunService.Heartbeat:Connect(function()
-				if infJumpActive and jumpHeld and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
-					local hum = localPlayer.Character.Humanoid
-					hum.Jump = true
-					jumpHoldTime = jumpHoldTime + 0.016
-					-- เพิ่มความสูงต่อเนื่องขณะกดค้าง (สูงสุด 150)
-					hum.JumpPower = math.min(50 + (jumpHoldTime * 20), 150)
+			infJumpConn = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+				if not gameProcessed and infJumpActive and (input.KeyCode == Enum.KeyCode.Space or input.UserInputType == Enum.UserInputType.Touch) then
+					if not jumpDebounce and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
+						local hum = localPlayer.Character.Humanoid
+						if hum:GetState() == Enum.HumanoidStateType.Freefall then
+							jumpDebounce = true
+							task.delay(0.2, function() jumpDebounce = false end) -- Debounce ป้องกันแตะค้างเรียกซ้ำ
+							
+							hum.Jump = true
+							if localPlayer.Character:FindFirstChild("HumanoidRootPart") then
+								local hrp = localPlayer.Character.HumanoidRootPart
+								-- บังคับความเร็วขึ้นกลางอากาศ (50 = ค่ากระโดดมาตรฐาน)
+								hrp.Velocity = Vector3.new(hrp.Velocity.X, 50, hrp.Velocity.Z)
+							end
+						end
+					end
 				end
 			end)
 		else
-			jumpHeld = false
-			jumpHoldTime = 0
-			if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
-				localPlayer.Character.Humanoid.JumpPower = originalJumpPower
-			end
+			jumpDebounce = false
 		end
 	end
 
@@ -478,7 +463,6 @@ task.spawn(function()
 		elseif name == "🤡 แกล้ง" then
 			btnJoke.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnJoke.TextColor3 = Color3.fromRGB(255, 80, 80)
 			
-			-- External Fling Button
 			local flingBtn = Instance.new("TextButton", contentScroll)
 			flingBtn.Size = UDim2.new(0.95, 0, 0, 45)
 			flingBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
@@ -513,7 +497,6 @@ task.spawn(function()
 		elseif name == "🌐 สคริปต์เกมอื่น" then
 			btnOther.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnOther.TextColor3 = Color3.fromRGB(255, 80, 80)
 			
-			-- MM2 Script Button
 			local mm2Btn = Instance.new("TextButton", contentScroll)
 			mm2Btn.Size = UDim2.new(0.95, 0, 0, 45)
 			mm2Btn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
@@ -540,7 +523,6 @@ task.spawn(function()
 				end)
 			end)
 			
-			-- Zombie Arena Script Button
 			local zombieBtn = Instance.new("TextButton", contentScroll)
 			zombieBtn.Size = UDim2.new(0.95, 0, 0, 45)
 			zombieBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
@@ -627,6 +609,6 @@ task.spawn(function()
 		if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false) end
 	end)
 
-	print("[ReaperHUB 💀 V0.8.1] โหลดสำเร็จ | Infinite Jump + Script Names Updated | Delta Optimized")
+	print("[ReaperHUB 💀 V0.8.2] โหลดสำเร็จ | Infinite Double-Jump + Names Fixed | Delta Optimized")
 end)
 
