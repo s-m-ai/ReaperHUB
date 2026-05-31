@@ -1,4 +1,4 @@
--- ReaperHUB 💀 V0.8 | External Fling Loader + No Fly | Delta Optimized
+-- ReaperHUB 💀 V0.8 | External Scripts Hub + MM2 Loader | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -384,6 +384,7 @@ task.spawn(function()
 	local btnPlr = createCatBtn("👤 player")
 	local btnGun = createCatBtn("🔫 ยิงปืน")
 	local btnJoke = createCatBtn("🤡 แกล้ง")
+	local btnOther = createCatBtn("🌐 สคริปต์เกมอื่น")
 
 	local function loadCategory(name)
 		clearContent()
@@ -391,6 +392,7 @@ task.spawn(function()
 		btnPlr.BackgroundColor3 = Color3.fromRGB(40, 12, 12); btnPlr.TextColor3 = Color3.fromRGB(200, 200, 200)
 		btnGun.BackgroundColor3 = Color3.fromRGB(40, 12, 12); btnGun.TextColor3 = Color3.fromRGB(200, 200, 200)
 		btnJoke.BackgroundColor3 = Color3.fromRGB(40, 12, 12); btnJoke.TextColor3 = Color3.fromRGB(200, 200, 200)
+		btnOther.BackgroundColor3 = Color3.fromRGB(40, 12, 12); btnOther.TextColor3 = Color3.fromRGB(200, 200, 200)
 		
 		if name == "ทั่วไป" then
 			btnGen.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnGen.TextColor3 = Color3.fromRGB(255, 80, 80)
@@ -428,12 +430,12 @@ task.spawn(function()
 		elseif name == "🤡 แกล้ง" then
 			btnJoke.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnJoke.TextColor3 = Color3.fromRGB(255, 80, 80)
 			
-			-- === EXTERNAL FLING BUTTON ===
+			-- External Fling Button
 			local flingBtn = Instance.new("TextButton", contentScroll)
 			flingBtn.Size = UDim2.new(0.95, 0, 0, 45)
 			flingBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
 			flingBtn.BorderSizePixel = 0
-			flingBtn.Text = "เปิดเตะคนออกแมพ"
+			flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"
 			flingBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 			flingBtn.TextSize = 15
 			flingBtn.Font = Enum.Font.GothamBold
@@ -449,7 +451,7 @@ task.spawn(function()
 					end)
 					task.wait(1.5)
 					if flingBtn and flingBtn.Parent then
-						flingBtn.Text = "เปิดเตะคนออกแมพ"
+						flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"
 						flingBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
 					end
 				end)
@@ -460,6 +462,41 @@ task.spawn(function()
 			note.Text = "(ใช้ได้เฉพาะแมพที่ตัวชนกันได้)"
 			note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 12; note.Font = Enum.Font.GothamSemibold
 			note.TextXAlignment = Enum.TextXAlignment.Center; note.TextWrapped = true
+		elseif name == "🌐 สคริปต์เกมอื่น" then
+			btnOther.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnOther.TextColor3 = Color3.fromRGB(255, 80, 80)
+			
+			-- === MM2 SCRIPT BUTTON (Somtank) ===
+			local mm2Btn = Instance.new("TextButton", contentScroll)
+			mm2Btn.Size = UDim2.new(0.95, 0, 0, 45)
+			mm2Btn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+			mm2Btn.BorderSizePixel = 0
+			mm2Btn.Text = "สคริปต์MM2ของSomtank"
+			mm2Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			mm2Btn.TextSize = 15
+			mm2Btn.Font = Enum.Font.GothamBold
+			mm2Btn.Active = true
+			Instance.new("UICorner", mm2Btn).CornerRadius = UDim.new(0, 8)
+			
+			mm2Btn.MouseButton1Click:Connect(function()
+				mm2Btn.Text = "⏳ กำลังโหลด..."
+				mm2Btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+				task.spawn(function()
+					pcall(function()
+						loadstring(game:HttpGet('https://raw.githubusercontent.com/M4VOWJ8IAKSR5WFRCCJ7AW5IW/ScrFr/refs/heads/main/MM2'))()
+					end)
+					task.wait(1.5)
+					if mm2Btn and mm2Btn.Parent then
+						mm2Btn.Text = "สคริปต์MM2ของSomtank"
+						mm2Btn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+					end
+				end)
+			end)
+			
+			local note = Instance.new("TextLabel", contentScroll)
+			note.Size = UDim2.new(0.95, 0, 0, 35); note.BackgroundTransparency = 1
+			note.Text = "⚠️ ใช้ในเกม Murder Mystery 2 เท่านั้น\nหากกดแล้วไม่เกิดอะไรขึ้น อาจเป็นเพราะ:\n• ไม่ใช่เกม MM2\n• สคริปต์อัปเดตหรือล่ม"
+			note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 11; note.Font = Enum.Font.GothamSemibold
+			note.TextXAlignment = Enum.TextXAlignment.Left; note.TextWrapped = true
 		end
 	end
 
@@ -467,6 +504,7 @@ task.spawn(function()
 	btnPlr.MouseButton1Click:Connect(function() loadCategory("👤 player") end)
 	btnGun.MouseButton1Click:Connect(function() loadCategory("🔫 ยิงปืน") end)
 	btnJoke.MouseButton1Click:Connect(function() loadCategory("🤡 แกล้ง") end)
+	btnOther.MouseButton1Click:Connect(function() loadCategory("🌐 สคริปต์เกมอื่น") end)
 	loadCategory("ทั่วไป")
 
 	-- === DRAG LOGIC ===
@@ -514,6 +552,6 @@ task.spawn(function()
 		if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false) end
 	end)
 
-	print("[ReaperHUB 💀 V0.8] โหลดสำเร็จ | External Fling Loader | No Fly | Delta Optimized")
+	print("[ReaperHUB 💀 V0.8] โหลดสำเร็จ | MM2 Script Loader Added | Delta Optimized")
 end)
 
