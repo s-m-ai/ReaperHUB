@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V0.9.3 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key Updated: ข้าวมันไก่
+-- Pumpkitz Hub 🎃 V0.9.4 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Invisible Button Added
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V09_3"
+		screenGui.Name = "PumpkitzHub_V09_4"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -65,7 +65,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V0.9.3"
+		title.Text = "Pumpkitz Hub 🎃 V0.9.4"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -164,7 +164,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V09_3"
+		tpScreenGui.Name = "PumpkitzHub_TP_V09_4"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -493,6 +493,32 @@ task.spawn(function()
 				createToggleBtn(contentScroll, "กระโดดไม่จำกัด 🔄", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleInfJump)
 				createToggleBtn(contentScroll, "อมตะ 💀", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleImmortal)
 				
+				-- 🆕 NEW: Invisible Button (ล่องหน)
+				local invisibleBtn = Instance.new("TextButton", contentScroll)
+				invisibleBtn.Size = UDim2.new(0.95, 0, 0, 45)
+				invisibleBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				invisibleBtn.BorderSizePixel = 0
+				invisibleBtn.Text = "ล่องหน"
+				invisibleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+				invisibleBtn.TextSize = 15
+				invisibleBtn.Font = Enum.Font.GothamBold
+				invisibleBtn.Active = true
+				Instance.new("UICorner", invisibleBtn).CornerRadius = UDim.new(0, 8)
+				invisibleBtn.MouseButton1Click:Connect(function()
+					invisibleBtn.Text = "⏳ กำลังโหลด..."
+					invisibleBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					task.spawn(function()
+						pcall(function()
+							loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-GUI-128871"))()
+						end)
+						task.wait(1.5)
+						if invisibleBtn and invisibleBtn.Parent then
+							invisibleBtn.Text = "ล่องหน"
+							invisibleBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+						end
+					end)
+				end)
+				
 				local flyBtn = Instance.new("TextButton", contentScroll)
 				flyBtn.Size = UDim2.new(0.95, 0, 0, 45); flyBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); flyBtn.BorderSizePixel = 0
 				flyBtn.Text = "Fly (บิน)"; flyBtn.TextColor3 = Color3.fromRGB(255, 255, 255); flyBtn.TextSize = 15; flyBtn.Font = Enum.Font.GothamBold; flyBtn.Active = true
@@ -599,7 +625,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V0.9.3"
+				versionLbl.Text = "เวอร์ชัน: V0.9.4"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -616,10 +642,10 @@ task.spawn(function()
 				dateLbl.TextXAlignment = Enum.TextXAlignment.Left
 				
 				local changelogLbl = Instance.new("TextLabel", updateFrame)
-				changelogLbl.Size = UDim2.new(1, -20, 0, 60)
+				changelogLbl.Size = UDim2.new(1, -20, 0, 75)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่:\n• เพิ่มปุ่ม 'อมตะ' ในหมวด 👤 player\n• เพิ่มหน้าแสดงข้อมูลอัปเดตแยกด้านล่างเมนู"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.4:\n• เพิ่มปุ่ม 'ล่องหน' ในหมวด 👤 player\n  → กดเพื่อโหลดสคริปต์ทำให้ตัวละครล่องหน\n• ปรับปรุงระบบโหลดสคริปต์ภายนอกให้เสถียรขึ้น"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -692,7 +718,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.3] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V0.9.4] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -766,7 +792,7 @@ task.spawn(function()
 
 		local function verifyKey()
 			local input = keyBox.Text:gsub("^%s*(.-)%s*$", "%1")
-			-- 🔑 คีย์ที่แก้ไข: ข้าวมันไก่
+			-- 🔑 คีย์: ข้าวมันไก่
 			if input == "ข้าวมันไก่" then
 				statusLbl.Text = "✅ คีย์ถูกต้อง! กำลังเข้าระบบ..."
 				statusLbl.TextColor3 = Color3.fromRGB(50, 200, 50)
@@ -806,7 +832,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.3 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.4 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
