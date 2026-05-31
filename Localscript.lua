@@ -1,4 +1,4 @@
--- ReaperHUB 💀 V0.8.2 | Infinite Double-Jump + Script Names Updated | Delta Optimized
+-- ReaperHUB 💀 V0.8.2 | Multi-Jump + Progressive Height + Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -348,29 +348,35 @@ task.spawn(function()
 		end
 	end
 
-	-- === INFINITE DOUBLE-JUMP SYSTEM ===
+	-- === INFINITE MULTI-JUMP (PROGRESSIVE HEIGHT) ===
 	local infJumpActive = false
 	local infJumpConn = nil
+	local jumpCount = 0
 	local jumpDebounce = false
 
 	local function toggleInfJump(state)
 		infJumpActive = state
+		jumpCount = 0
 		if infJumpConn then infJumpConn:Disconnect(); infJumpConn = nil end
+
 		if state then
 			infJumpConn = UserInputService.InputBegan:Connect(function(input, gameProcessed)
-				if not gameProcessed and infJumpActive and (input.KeyCode == Enum.KeyCode.Space or input.UserInputType == Enum.UserInputType.Touch) then
-					if not jumpDebounce and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
+				if infJumpActive and (input.KeyCode == Enum.KeyCode.Space or input.UserInputType == Enum.UserInputType.Touch) then
+					if jumpDebounce then return end
+					jumpDebounce = true
+					task.delay(0.15, function() jumpDebounce = false end)
+
+					if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
 						local hum = localPlayer.Character.Humanoid
+						local hrp = localPlayer.Character.HumanoidRootPart
+
 						if hum:GetState() == Enum.HumanoidStateType.Freefall then
-							jumpDebounce = true
-							task.delay(0.2, function() jumpDebounce = false end) -- Debounce ป้องกันแตะค้างเรียกซ้ำ
-							
-							hum.Jump = true
-							if localPlayer.Character:FindFirstChild("HumanoidRootPart") then
-								local hrp = localPlayer.Character.HumanoidRootPart
-								-- บังคับความเร็วขึ้นกลางอากาศ (50 = ค่ากระโดดมาตรฐาน)
-								hrp.Velocity = Vector3.new(hrp.Velocity.X, 50, hrp.Velocity.Z)
-							end
+							jumpCount = jumpCount + 1
+							-- ความเร็วเพิ่มขึ้น 12 ต่อครั้งที่กดซ้ำ สูงสุดจำกัดที่ 180 เพื่อป้องกันฟิสิกส์พัง
+							local boost = math.min(50 + (jumpCount * 12), 180)
+							hrp.Velocity = Vector3.new(hrp.Velocity.X, boost, hrp.Velocity.Z)
+						else
+							jumpCount = 0 -- รีเซ็ตเคาน์เตอร์เมื่อแตะพื้น
 						end
 					end
 				end
@@ -609,6 +615,6 @@ task.spawn(function()
 		if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false) end
 	end)
 
-	print("[ReaperHUB 💀 V0.8.2] โหลดสำเร็จ | Infinite Double-Jump + Names Fixed | Delta Optimized")
+	print("[ReaperHUB 💀 V0.8.2] โหลดสำเร็จ | Multi-Jump + Progressive Height | Delta Optimized")
 end)
 
