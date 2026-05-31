@@ -1,4 +1,4 @@
--- ReaperHUB 💀 V0.8.4 | BloxFruits Script Loader + Fly Button Renamed | Delta Optimized
+-- ReaperHUB 💀 V0.8.5 | 99 Nights Loader + Button Names Updated | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -12,7 +12,7 @@ task.spawn(function()
 
 	-- === MAIN GUI CORE ===
 	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "ReaperHUB_V08_4"
+	screenGui.Name = "ReaperHUB_V08_5"
 	screenGui.ResetOnSpawn = false
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	screenGui.IgnoreGuiInset = true
@@ -61,7 +61,7 @@ task.spawn(function()
 	title.Size = UDim2.new(1, -85, 1, 0)
 	title.Position = UDim2.new(0, 12, 0, 0)
 	title.BackgroundTransparency = 1
-	title.Text = "ReaperHUB 💀 V0.8.4"
+	title.Text = "ReaperHUB 💀 V0.8.5"
 	title.TextColor3 = Color3.fromRGB(255, 255, 255)
 	title.TextSize = 18
 	title.Font = Enum.Font.GothamBold
@@ -161,7 +161,7 @@ task.spawn(function()
 
 	-- === INDEPENDENT TELEPORT GUI ===
 	local tpScreenGui = Instance.new("ScreenGui")
-	tpScreenGui.Name = "ReaperHUB_TP_V08_4"
+	tpScreenGui.Name = "ReaperHUB_TP_V08_5"
 	tpScreenGui.ResetOnSpawn = false
 	tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	tpScreenGui.IgnoreGuiInset = true
@@ -460,7 +460,7 @@ task.spawn(function()
 			createToggleBtn(contentScroll, "Noclip 🚶‍♂️", Color3.fromRGB(180, 30, 30), Color3.fromRGB(50, 15, 15), toggleNoclip)
 			createToggleBtn(contentScroll, "กระโดดไม่จำกัด 🔄", Color3.fromRGB(180, 30, 30), Color3.fromRGB(50, 15, 15), toggleInfJump)
 			
-			-- === EXTERNAL FLY BUTTON (Renamed) ===
+			-- === EXTERNAL FLY BUTTON ===
 			local flyBtn = Instance.new("TextButton", contentScroll)
 			flyBtn.Size = UDim2.new(0.95, 0, 0, 45)
 			flyBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
@@ -529,7 +529,7 @@ task.spawn(function()
 		elseif name == "🌐 สคริปต์เกมอื่น" then
 			btnOther.BackgroundColor3 = Color3.fromRGB(60, 18, 18); btnOther.TextColor3 = Color3.fromRGB(255, 80, 80)
 			
-			-- MM2 Script Button
+			-- MM2 Script Button (Updated Name)
 			local mm2Btn = Instance.new("TextButton", contentScroll)
 			mm2Btn.Size = UDim2.new(0.95, 0, 0, 45)
 			mm2Btn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
@@ -583,7 +583,7 @@ task.spawn(function()
 				end)
 			end)
 			
-			-- === BLOX FRUITS SCRIPT BUTTON ===
+			-- BloxFruits Script Button (Updated Name)
 			local bfBtn = Instance.new("TextButton", contentScroll)
 			bfBtn.Size = UDim2.new(0.95, 0, 0, 45)
 			bfBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
@@ -610,9 +610,36 @@ task.spawn(function()
 				end)
 			end)
 			
+			-- === 99 NIGHTS SCRIPT BUTTON ===
+			local nightsBtn = Instance.new("TextButton", contentScroll)
+			nightsBtn.Size = UDim2.new(0.95, 0, 0, 45)
+			nightsBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+			nightsBtn.BorderSizePixel = 0
+			nightsBtn.Text = "99 nights"
+			nightsBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			nightsBtn.TextSize = 15
+			nightsBtn.Font = Enum.Font.GothamBold
+			nightsBtn.Active = true
+			Instance.new("UICorner", nightsBtn).CornerRadius = UDim.new(0, 8)
+			
+			nightsBtn.MouseButton1Click:Connect(function()
+				nightsBtn.Text = "⏳ กำลังโหลด..."
+				nightsBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+				task.spawn(function()
+					pcall(function()
+						loadstring(game:HttpGet("https://foxname.top/loader"))()
+					end)
+					task.wait(1.5)
+					if nightsBtn and nightsBtn.Parent then
+						nightsBtn.Text = "99 nights"
+						nightsBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+					end
+				end)
+			end)
+			
 			local note = Instance.new("TextLabel", contentScroll)
-			note.Size = UDim2.new(0.95, 0, 0, 55); note.BackgroundTransparency = 1
-			note.Text = "⚠️ ใช้ในเกมที่เกี่ยวข้องเท่านั้น:\n• BloxFruits (QuantumOnyx)\n• MM2 / Survive Zombie Arena\nหากกดแล้วไม่เกิดอะไรขึ้น อาจเป็นเพราะ:\n• ไม่ใช่เกมที่เหมาะสม\n• สคริปต์อัปเดตหรือล่ม"
+			note.Size = UDim2.new(0.95, 0, 0, 65); note.BackgroundTransparency = 1
+			note.Text = "⚠️ ใช้ในเกมที่เกี่ยวข้องเท่านั้น:\n• 99 Nights (FoxLoader)\n• BloxFruits (QuantumOnyx)\n• MM2 / Survive Zombie Arena\nหากกดแล้วไม่เกิดอะไรขึ้น อาจเป็นเพราะ:\n• ไม่ใช่เกมที่เหมาะสม\n• สคริปต์อัปเดตหรือล่ม"
 			note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 11; note.Font = Enum.Font.GothamSemibold
 			note.TextXAlignment = Enum.TextXAlignment.Left; note.TextWrapped = true
 		end
@@ -670,6 +697,6 @@ task.spawn(function()
 		if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false) end
 	end)
 
-	print("[ReaperHUB 💀 V0.8.4] โหลดสำเร็จ | BloxFruits Script + Fly Renamed | Delta Optimized")
+	print("[ReaperHUB 💀 V0.8.5] โหลดสำเร็จ | 99 Nights + Button Names Fixed | Delta Optimized")
 end)
 
