@@ -598,7 +598,7 @@ task.spawn(function()
 					speedEscBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function()
 						pcall(function()
-							loadstring(game:HttpGet("https://pastefy.app/bYadmc9a/raw"))()
+						loadstring(game:HttpGet("https://raw.githubusercontent.com/lastxvc/-1-speed-keyboard/refs/heads/main/script"))()
 						end)
 						task.wait(1.5)
 						if speedEscBtn and speedEscBtn.Parent then
