@@ -587,7 +587,7 @@ task.spawn(function()
 				speedEscBtn.Size = UDim2.new(0.95, 0, 0, 45)
 				speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
 				speedEscBtn.BorderSizePixel = 0
-				speedEscBtn.Text = "+1 speed keyboard escape"
+				speedEscBtn.Text = "+1 speed keyboard escape (คีย์: lol777)"
 				speedEscBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 				speedEscBtn.TextSize = 14
 				speedEscBtn.Font = Enum.Font.GothamBold
@@ -602,7 +602,7 @@ task.spawn(function()
 						end)
 						task.wait(1.5)
 						if speedEscBtn and speedEscBtn.Parent then
-							speedEscBtn.Text = "+1 speed keyboard escape"
+							speedEscBtn.Text = "+1 speed keyboard escape (คีย์: lol777)"
 							speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
 						end
 					end)
