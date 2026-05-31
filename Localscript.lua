@@ -1,4 +1,4 @@
--- Pumpkitz Hub 🎃 V0.9.3 | Update Panel + Immortal Toggle | Delta Optimized
+-- Pumpkitz Hub 🎃 V0.9.3 | 5s Loading + Max Immortal Health | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -371,10 +371,11 @@ task.spawn(function()
 			else jumpDebounce = false end
 		end
 
-		-- === IMMORTAL SYSTEM (God Mode) ===
+		-- === IMMORTAL SYSTEM (God Mode - MAX HEALTH) ===
 		local immortalActive = false
 		local immortalConn = nil
 		local originalMaxHealth = 100
+		local MAX_HEALTH = 9999999999999999999999 -- ค่าเลือดสูงสุดตามคำขอ
 
 		local function toggleImmortal(state)
 			immortalActive = state
@@ -384,14 +385,14 @@ task.spawn(function()
 				if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
 					local hum = localPlayer.Character.Humanoid
 					originalMaxHealth = hum.MaxHealth
-					hum.MaxHealth = 1e9
+					hum.MaxHealth = MAX_HEALTH
 					hum.Health = hum.MaxHealth
 				end
 				immortalConn = RunService.Heartbeat:Connect(function()
 					if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
 						local hum = localPlayer.Character.Humanoid
 						if hum.Health < hum.MaxHealth then hum.Health = hum.MaxHealth end
-						if hum.MaxHealth < 1e9 then hum.MaxHealth = 1e9 end
+						if hum.MaxHealth < MAX_HEALTH then hum.MaxHealth = MAX_HEALTH end
 					end
 				end)
 			else
@@ -690,10 +691,10 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.3] โหลดสำเร็จ | Update Panel + Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V0.9.3] โหลดสำเร็จ | 5s Loading + Max Immortal | Delta Optimized")
 	end
 
-	-- === LOADING SCREEN ===
+	-- === LOADING SCREEN (EXTENDED TO 5 SECONDS) ===
 	local loadingGui = Instance.new("ScreenGui")
 	loadingGui.Name = "PumpkitzHub_Loading"; loadingGui.ResetOnSpawn = false
 	loadingGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling; loadingGui.IgnoreGuiInset = true
@@ -738,10 +739,15 @@ task.spawn(function()
 	creditAssistant.Size = UDim2.new(1, 0, 0, 25); creditAssistant.Position = UDim2.fromScale(0.5, 0.6); creditAssistant.AnchorPoint = Vector2.new(0.5, 0.5); creditAssistant.BackgroundTransparency = 1
 	creditAssistant.Text = "ผู้ช่วย:Qwen3.6-Plus"; creditAssistant.TextColor3 = Color3.fromRGB(200, 200, 200); creditAssistant.TextSize = 13; creditAssistant.Font = Enum.Font.GothamSemibold; creditAssistant.TextXAlignment = Enum.TextXAlignment.Center
 
-	-- Loading Animation
+	-- Loading Animation (EXTENDED TO ~5 SECONDS)
 	task.spawn(function()
-		for i = 0, 1, 0.02 do loadingBarFill.Size = UDim2.new(i, 0, 1, 0); task.wait(0.03) end
-		loadingStatus.Text = "เตรียมความพร้อม..."; task.wait(0.5)
+		-- 100 iterations × 0.05s wait = 5 seconds for loading bar
+		for i = 0, 1, 0.01 do 
+			loadingBarFill.Size = UDim2.new(i, 0, 1, 0)
+			task.wait(0.05) 
+		end
+		loadingStatus.Text = "เตรียมความพร้อม..."
+		task.wait(1) -- Additional 1 second for final status
 		if loadingGui and loadingGui.Parent then loadingGui:Destroy() end
 		loadMainGUI()
 	end)
