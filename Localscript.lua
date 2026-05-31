@@ -1,4 +1,4 @@
--- Pumpkitz Hub 🎃 V0.8.7 | Orange/Black Theme + Kill Aura + Mobile Optimized
+-- Pumpkitz Hub 🎃 V0.8.7 | Orange/Black Theme + Kill Aura + Menu Fix | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -10,120 +10,10 @@ task.spawn(function()
 	local playerGui = localPlayer:WaitForChild("PlayerGui", 10)
 	if not playerGui then error("[Pumpkitz Hub] PlayerGui ไม่พบ หรือถูกบล็อก") end
 
-	-- === LOADING SCREEN ===
-	local loadingGui = Instance.new("ScreenGui")
-	loadingGui.Name = "PumpkitzHub_Loading"
-	loadingGui.ResetOnSpawn = false
-	loadingGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-	loadingGui.IgnoreGuiInset = true
-	loadingGui.DisplayOrder = 9999
-	loadingGui.Enabled = true
-	loadingGui.Parent = playerGui
-
-	local loadingFrame = Instance.new("Frame")
-	loadingFrame.Name = "LoadingFrame"
-	loadingFrame.Size = UDim2.fromScale(1, 1)
-	loadingFrame.BackgroundColor3 = Color3.fromRGB(20, 8, 2)
-	loadingFrame.BorderSizePixel = 0
-	loadingFrame.Parent = loadingGui
-
-	local loadingGradient = Instance.new("UIGradient", loadingFrame)
-	loadingGradient.Color = ColorSequence.new({
-		ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 10, 3)),
-		ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 15, 5))
-	})
-
-	local loadingLogo = Instance.new("TextLabel", loadingFrame)
-	loadingLogo.Size = UDim2.new(1, 0, 0, 80)
-	loadingLogo.Position = UDim2.fromScale(0.5, 0.3)
-	loadingLogo.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingLogo.BackgroundTransparency = 1
-	loadingLogo.Text = "Pumpkitz Hub 🎃"
-	loadingLogo.TextColor3 = Color3.fromRGB(255, 255, 255)
-	loadingLogo.TextSize = 32
-	loadingLogo.Font = Enum.Font.GothamBold
-	loadingLogo.TextXAlignment = Enum.TextXAlignment.Center
-
-	local loadingVersion = Instance.new("TextLabel", loadingFrame)
-	loadingVersion.Size = UDim2.new(1, 0, 0, 30)
-	loadingVersion.Position = UDim2.fromScale(0.5, 0.42)
-	loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1
-	loadingVersion.Text = "V0.8.7 | Delta Optimized"
-	loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
-	loadingVersion.TextSize = 16
-	loadingVersion.Font = Enum.Font.GothamSemibold
-	loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
-
-	local loadingBar = Instance.new("Frame", loadingFrame)
-	loadingBar.Name = "LoadingBar"
-	loadingBar.Size = UDim2.new(0.6, 0, 0, 8)
-	loadingBar.Position = UDim2.fromScale(0.5, 0.55)
-	loadingBar.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingBar.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
-	loadingBar.BorderSizePixel = 0
-	Instance.new("UICorner", loadingBar).CornerRadius = UDim.new(0, 4)
-
-	local loadingBarFill = Instance.new("Frame", loadingBar)
-	loadingBarFill.Name = "LoadingBarFill"
-	loadingBarFill.Size = UDim2.new(0, 0, 1, 0)
-	loadingBarFill.BackgroundColor3 = Color3.fromRGB(255, 140, 0)
-	loadingBarFill.BorderSizePixel = 0
-	Instance.new("UICorner", loadingBarFill).CornerRadius = UDim.new(0, 4)
-
-	local loadingStatus = Instance.new("TextLabel", loadingFrame)
-	loadingStatus.Size = UDim2.new(1, 0, 0, 25)
-	loadingStatus.Position = UDim2.fromScale(0.5, 0.65)
-	loadingStatus.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingStatus.BackgroundTransparency = 1
-	loadingStatus.Text = "กำลังโหลดทรัพยากร..."
-	loadingStatus.TextColor3 = Color3.fromRGB(180, 180, 180)
-	loadingStatus.TextSize = 14
-	loadingStatus.Font = Enum.Font.GothamSemibold
-	loadingStatus.TextXAlignment = Enum.TextXAlignment.Center
-
-	local creditsFrame = Instance.new("Frame", loadingFrame)
-	creditsFrame.Size = UDim2.new(1, 0, 0, 70)
-	creditsFrame.Position = UDim2.fromScale(0.5, 0.85)
-	creditsFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-	creditsFrame.BackgroundTransparency = 1
-
-	local creditTitle = Instance.new("TextLabel", creditsFrame)
-	creditTitle.Size = UDim2.new(1, 0, 0, 25)
-	creditTitle.Position = UDim2.fromScale(0.5, 0.2)
-	creditTitle.AnchorPoint = Vector2.new(0.5, 0.5)
-	creditTitle.BackgroundTransparency = 1
-	creditTitle.Text = "ทำโดย:Winning"
-	creditTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-	creditTitle.TextSize = 15
-	creditTitle.Font = Enum.Font.GothamBold
-	creditTitle.TextXAlignment = Enum.TextXAlignment.Center
-
-	local creditAssistant = Instance.new("TextLabel", creditsFrame)
-	creditAssistant.Size = UDim2.new(1, 0, 0, 25)
-	creditAssistant.Position = UDim2.fromScale(0.5, 0.6)
-	creditAssistant.AnchorPoint = Vector2.new(0.5, 0.5)
-	creditAssistant.BackgroundTransparency = 1
-	creditAssistant.Text = "ผู้ช่วย:Qwen3.6-Plus"
-	creditAssistant.TextColor3 = Color3.fromRGB(200, 200, 200)
-	creditAssistant.TextSize = 13
-	creditAssistant.Font = Enum.Font.GothamSemibold
-	creditAssistant.TextXAlignment = Enum.TextXAlignment.Center
-
-	-- Loading Animation
-	task.spawn(function()
-		for i = 0, 1, 0.02 do
-			loadingBarFill.Size = UDim2.new(i, 0, 1, 0)
-			task.wait(0.03)
-		end
-		loadingStatus.Text = "เตรียมความพร้อม..."
-		task.wait(0.5)
-		loadingGui:Destroy()
-		loadMainGUI()
-	end)
-
-	-- === MAIN GUI FUNCTION ===
+	-- === MAIN GUI FUNCTION (ประกาศก่อนใช้งาน เพื่อป้องกัน nil error) ===
 	local function loadMainGUI()
+		if not playerGui or not playerGui.Parent then return end
+		
 		local screenGui = Instance.new("ScreenGui")
 		screenGui.Name = "PumpkitzHub_V08_7"
 		screenGui.ResetOnSpawn = false
@@ -489,7 +379,7 @@ task.spawn(function()
 			else jumpDebounce = false end
 		end
 
-		-- === KILL AURA SYSTEM (Functional) ===
+		-- === KILL AURA SYSTEM ===
 		local killAuraActive = false
 		local killAuraConn = nil
 		local auraRadius = 5.0
@@ -501,7 +391,6 @@ task.spawn(function()
 			if auraHighlight then auraHighlight:Destroy(); auraHighlight = nil end
 			
 			if state then
-				-- Visual Aura Ring
 				if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
 					auraHighlight = Instance.new("Highlight")
 					auraHighlight.Adornee = localPlayer.Character
@@ -520,9 +409,7 @@ task.spawn(function()
 						if p ~= localPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") then
 							local dist = (hrp.Position - p.Character.HumanoidRootPart.Position).Magnitude
 							if dist <= auraRadius and p.Character.Humanoid.Health > 0 then
-								-- Client-side damage attempt (works in many games)
 								p.Character.Humanoid:TakeDamage(50)
-								-- Fallback knockback for games with anti-damage
 								local bv = Instance.new("BodyVelocity")
 								bv.Velocity = (p.Character.HumanoidRootPart.Position - hrp.Position).Unit * 35
 								bv.MaxForce = Vector3.new(400000, 400000, 400000)
@@ -778,5 +665,117 @@ task.spawn(function()
 
 		print("[Pumpkitz Hub 🎃 V0.8.7] โหลดสำเร็จ | Orange Theme + Kill Aura | Delta Optimized")
 	end
+
+	-- === LOADING SCREEN ===
+	local loadingGui = Instance.new("ScreenGui")
+	loadingGui.Name = "PumpkitzHub_Loading"
+	loadingGui.ResetOnSpawn = false
+	loadingGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+	loadingGui.IgnoreGuiInset = true
+	loadingGui.DisplayOrder = 9999
+	loadingGui.Enabled = true
+	loadingGui.Parent = playerGui
+
+	local loadingFrame = Instance.new("Frame")
+	loadingFrame.Name = "LoadingFrame"
+	loadingFrame.Size = UDim2.fromScale(1, 1)
+	loadingFrame.BackgroundColor3 = Color3.fromRGB(20, 8, 2)
+	loadingFrame.BorderSizePixel = 0
+	loadingFrame.Parent = loadingGui
+
+	local loadingGradient = Instance.new("UIGradient", loadingFrame)
+	loadingGradient.Color = ColorSequence.new({
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 10, 3)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 15, 5))
+	})
+
+	local loadingLogo = Instance.new("TextLabel", loadingFrame)
+	loadingLogo.Size = UDim2.new(1, 0, 0, 80)
+	loadingLogo.Position = UDim2.fromScale(0.5, 0.3)
+	loadingLogo.AnchorPoint = Vector2.new(0.5, 0.5)
+	loadingLogo.BackgroundTransparency = 1
+	loadingLogo.Text = "Pumpkitz Hub 🎃"
+	loadingLogo.TextColor3 = Color3.fromRGB(255, 255, 255)
+	loadingLogo.TextSize = 32
+	loadingLogo.Font = Enum.Font.GothamBold
+	loadingLogo.TextXAlignment = Enum.TextXAlignment.Center
+
+	local loadingVersion = Instance.new("TextLabel", loadingFrame)
+	loadingVersion.Size = UDim2.new(1, 0, 0, 30)
+	loadingVersion.Position = UDim2.fromScale(0.5, 0.42)
+	loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
+	loadingVersion.BackgroundTransparency = 1
+	loadingVersion.Text = "V0.8.7 | Delta Optimized"
+	loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.TextSize = 16
+	loadingVersion.Font = Enum.Font.GothamSemibold
+	loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
+
+	local loadingBar = Instance.new("Frame", loadingFrame)
+	loadingBar.Name = "LoadingBar"
+	loadingBar.Size = UDim2.new(0.6, 0, 0, 8)
+	loadingBar.Position = UDim2.fromScale(0.5, 0.55)
+	loadingBar.AnchorPoint = Vector2.new(0.5, 0.5)
+	loadingBar.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+	loadingBar.BorderSizePixel = 0
+	Instance.new("UICorner", loadingBar).CornerRadius = UDim.new(0, 4)
+
+	local loadingBarFill = Instance.new("Frame", loadingBar)
+	loadingBarFill.Name = "LoadingBarFill"
+	loadingBarFill.Size = UDim2.new(0, 0, 1, 0)
+	loadingBarFill.BackgroundColor3 = Color3.fromRGB(255, 140, 0)
+	loadingBarFill.BorderSizePixel = 0
+	Instance.new("UICorner", loadingBarFill).CornerRadius = UDim.new(0, 4)
+
+	local loadingStatus = Instance.new("TextLabel", loadingFrame)
+	loadingStatus.Size = UDim2.new(1, 0, 0, 25)
+	loadingStatus.Position = UDim2.fromScale(0.5, 0.65)
+	loadingStatus.AnchorPoint = Vector2.new(0.5, 0.5)
+	loadingStatus.BackgroundTransparency = 1
+	loadingStatus.Text = "กำลังโหลดทรัพยากร..."
+	loadingStatus.TextColor3 = Color3.fromRGB(180, 180, 180)
+	loadingStatus.TextSize = 14
+	loadingStatus.Font = Enum.Font.GothamSemibold
+	loadingStatus.TextXAlignment = Enum.TextXAlignment.Center
+
+	local creditsFrame = Instance.new("Frame", loadingFrame)
+	creditsFrame.Size = UDim2.new(1, 0, 0, 70)
+	creditsFrame.Position = UDim2.fromScale(0.5, 0.85)
+	creditsFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+	creditsFrame.BackgroundTransparency = 1
+
+	local creditTitle = Instance.new("TextLabel", creditsFrame)
+	creditTitle.Size = UDim2.new(1, 0, 0, 25)
+	creditTitle.Position = UDim2.fromScale(0.5, 0.2)
+	creditTitle.AnchorPoint = Vector2.new(0.5, 0.5)
+	creditTitle.BackgroundTransparency = 1
+	creditTitle.Text = "ทำโดย:Winning"
+	creditTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+	creditTitle.TextSize = 15
+	creditTitle.Font = Enum.Font.GothamBold
+	creditTitle.TextXAlignment = Enum.TextXAlignment.Center
+
+	local creditAssistant = Instance.new("TextLabel", creditsFrame)
+	creditAssistant.Size = UDim2.new(1, 0, 0, 25)
+	creditAssistant.Position = UDim2.fromScale(0.5, 0.6)
+	creditAssistant.AnchorPoint = Vector2.new(0.5, 0.5)
+	creditAssistant.BackgroundTransparency = 1
+	creditAssistant.Text = "ผู้ช่วย:Qwen3.6-Plus"
+	creditAssistant.TextColor3 = Color3.fromRGB(200, 200, 200)
+	creditAssistant.TextSize = 13
+	creditAssistant.Font = Enum.Font.GothamSemibold
+	creditAssistant.TextXAlignment = Enum.TextXAlignment.Center
+
+	-- Loading Animation
+	task.spawn(function()
+		for i = 0, 1, 0.02 do
+			loadingBarFill.Size = UDim2.new(i, 0, 1, 0)
+			task.wait(0.03)
+		end
+		loadingStatus.Text = "เตรียมความพร้อม..."
+		task.wait(0.5)
+		if loadingGui and loadingGui.Parent then loadingGui:Destroy() end
+		loadMainGUI()
+	end)
 end)
 
