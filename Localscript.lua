@@ -1,4 +1,4 @@
--- ReaperHUB 💀 V0.8.2 | Multi-Jump + Progressive Height + Delta Optimized
+-- ReaperHUB 💀 V0.8.3 | External Fly Loader + Multi-Jump | Delta Optimized
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
 
@@ -12,7 +12,7 @@ task.spawn(function()
 
 	-- === MAIN GUI CORE ===
 	local screenGui = Instance.new("ScreenGui")
-	screenGui.Name = "ReaperHUB_V08_2"
+	screenGui.Name = "ReaperHUB_V08_3"
 	screenGui.ResetOnSpawn = false
 	screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	screenGui.IgnoreGuiInset = true
@@ -61,7 +61,7 @@ task.spawn(function()
 	title.Size = UDim2.new(1, -85, 1, 0)
 	title.Position = UDim2.new(0, 12, 0, 0)
 	title.BackgroundTransparency = 1
-	title.Text = "ReaperHUB 💀 V0.8.2"
+	title.Text = "ReaperHUB 💀 V0.8.3"
 	title.TextColor3 = Color3.fromRGB(255, 255, 255)
 	title.TextSize = 18
 	title.Font = Enum.Font.GothamBold
@@ -161,7 +161,7 @@ task.spawn(function()
 
 	-- === INDEPENDENT TELEPORT GUI ===
 	local tpScreenGui = Instance.new("ScreenGui")
-	tpScreenGui.Name = "ReaperHUB_TP_V08_2"
+	tpScreenGui.Name = "ReaperHUB_TP_V08_3"
 	tpScreenGui.ResetOnSpawn = false
 	tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	tpScreenGui.IgnoreGuiInset = true
@@ -372,11 +372,10 @@ task.spawn(function()
 
 						if hum:GetState() == Enum.HumanoidStateType.Freefall then
 							jumpCount = jumpCount + 1
-							-- ความเร็วเพิ่มขึ้น 12 ต่อครั้งที่กดซ้ำ สูงสุดจำกัดที่ 180 เพื่อป้องกันฟิสิกส์พัง
 							local boost = math.min(50 + (jumpCount * 12), 180)
 							hrp.Velocity = Vector3.new(hrp.Velocity.X, boost, hrp.Velocity.Z)
 						else
-							jumpCount = 0 -- รีเซ็ตเคาน์เตอร์เมื่อแตะพื้น
+							jumpCount = 0
 						end
 					end
 				end
@@ -460,6 +459,33 @@ task.spawn(function()
 
 			createToggleBtn(contentScroll, "Noclip 🚶‍♂️", Color3.fromRGB(180, 30, 30), Color3.fromRGB(50, 15, 15), toggleNoclip)
 			createToggleBtn(contentScroll, "กระโดดไม่จำกัด 🔄", Color3.fromRGB(180, 30, 30), Color3.fromRGB(50, 15, 15), toggleInfJump)
+			
+			-- === EXTERNAL FLY BUTTON ===
+			local flyBtn = Instance.new("TextButton", contentScroll)
+			flyBtn.Size = UDim2.new(0.95, 0, 0, 45)
+			flyBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+			flyBtn.BorderSizePixel = 0
+			flyBtn.Text = "บิน ✈️ (เปิดสคริปต์ภายนอก)"
+			flyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			flyBtn.TextSize = 15
+			flyBtn.Font = Enum.Font.GothamBold
+			flyBtn.Active = true
+			Instance.new("UICorner", flyBtn).CornerRadius = UDim.new(0, 8)
+			
+			flyBtn.MouseButton1Click:Connect(function()
+				flyBtn.Text = "⏳ กำลังโหลด..."
+				flyBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+				task.spawn(function()
+					pcall(function()
+						loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-fly-111281"))()
+					end)
+					task.wait(1.5)
+					if flyBtn and flyBtn.Parent then
+						flyBtn.Text = "บิน ✈️ (เปิดสคริปต์ภายนอก)"
+						flyBtn.BackgroundColor3 = Color3.fromRGB(50, 15, 15)
+					end
+				end)
+			end)
 			
 			local tpBtn = Instance.new("TextButton", contentScroll); tpBtn.Size = UDim2.new(0.95, 0, 0, 45); tpBtn.BackgroundColor3 = Color3.fromRGB(45, 14, 14); tpBtn.BorderSizePixel = 0; tpBtn.Text = "📍 เปิดหน้าต่าง Teleport"; tpBtn.TextColor3 = Color3.fromRGB(255, 255, 255); tpBtn.TextSize = 16; tpBtn.Font = Enum.Font.GothamBold; tpBtn.Active = true; Instance.new("UICorner", tpBtn).CornerRadius = UDim.new(0, 8); tpBtn.MouseButton1Click:Connect(openTPGui)
 		elseif name == "🔫 ยิงปืน" then
@@ -615,6 +641,6 @@ task.spawn(function()
 		if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false) end
 	end)
 
-	print("[ReaperHUB 💀 V0.8.2] โหลดสำเร็จ | Multi-Jump + Progressive Height | Delta Optimized")
+	print("[ReaperHUB 💀 V0.8.3] โหลดสำเร็จ | External Fly Loader Added | Delta Optimized")
 end)
 
