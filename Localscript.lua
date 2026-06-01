@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V0.9.5 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key: ข้าวมันไก่ | 🆕 Update: +1 Speed Keyboard Escape Added
+-- Pumpkitz Hub 🎃 V0.9.6 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🆕 Update: +1 Speed Key Popup Added
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V09_5"
+		screenGui.Name = "PumpkitzHub_V09_6"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -65,7 +65,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V0.9.5"
+		title.Text = "Pumpkitz Hub 🎃 V0.9.6"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -164,7 +164,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V09_5"
+		tpScreenGui.Name = "PumpkitzHub_TP_V09_6"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -458,6 +458,97 @@ task.spawn(function()
 		btnUpdate.Active = true
 		Instance.new("UICorner", btnUpdate).CornerRadius = UDim.new(0, 6)
 
+		-- === 🆕 KEY POPUP GUI FOR +1 SPEED ===
+		local function showSpeedKeyPopup()
+			local keyPopupGui = Instance.new("ScreenGui")
+			keyPopupGui.Name = "Pumpkitz_SpeedKey_Popup"
+			keyPopupGui.ResetOnSpawn = false
+			keyPopupGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+			keyPopupGui.IgnoreGuiInset = true
+			keyPopupGui.DisplayOrder = 1001
+			keyPopupGui.Enabled = true
+			keyPopupGui.Parent = playerGui
+
+			local keyPopupFrame = Instance.new("Frame")
+			keyPopupFrame.Name = "KeyPopupFrame"
+			keyPopupFrame.Size = UDim2.fromOffset(200, 120)
+			keyPopupFrame.Position = UDim2.fromScale(0.5, 0.5)
+			keyPopupFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+			keyPopupFrame.BackgroundColor3 = Color3.fromRGB(20, 8, 2)
+			keyPopupFrame.BorderSizePixel = 0
+			keyPopupFrame.Parent = keyPopupGui
+			Instance.new("UICorner", keyPopupFrame).CornerRadius = UDim.new(0, 10)
+			Instance.new("UIStroke", keyPopupFrame).Color = Color3.fromRGB(255, 140, 0)
+
+			local keyPopupHeader = Instance.new("Frame", keyPopupFrame)
+			keyPopupHeader.Size = UDim2.new(1, 0, 0, 30)
+			keyPopupHeader.BackgroundColor3 = Color3.fromRGB(40, 14, 5)
+			keyPopupHeader.BorderSizePixel = 0
+			keyPopupHeader.Active = true
+			Instance.new("UICorner", keyPopupHeader).CornerRadius = UDim.new(0, 10)
+
+			local keyPopupTitle = Instance.new("TextLabel", keyPopupHeader)
+			keyPopupTitle.Size = UDim2.new(0.8, 0, 1, 0)
+			keyPopupTitle.Position = UDim2.new(0.1, 0, 0, 0)
+			keyPopupTitle.BackgroundTransparency = 1
+			keyPopupTitle.Text = "key(คีย์)"
+			keyPopupTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+			keyPopupTitle.TextSize = 14
+			keyPopupTitle.Font = Enum.Font.GothamBold
+			keyPopupTitle.TextXAlignment = Enum.TextXAlignment.Center
+
+			local keyPopupClose = Instance.new("TextButton", keyPopupHeader)
+			keyPopupClose.Size = UDim2.fromOffset(22, 20)
+			keyPopupClose.Position = UDim2.new(0.92, -15, 0, 5)
+			keyPopupClose.BackgroundColor3 = Color3.fromRGB(220, 100, 20)
+			keyPopupClose.BorderSizePixel = 0
+			keyPopupClose.Text = "X"
+			keyPopupClose.TextColor3 = Color3.fromRGB(255, 255, 255)
+			keyPopupClose.TextSize = 13
+			keyPopupClose.Font = Enum.Font.GothamBold
+			keyPopupClose.Active = true
+			Instance.new("UICorner", keyPopupClose).CornerRadius = UDim.new(0, 4)
+			keyPopupClose.MouseButton1Click:Connect(function() keyPopupGui:Destroy() end)
+
+			local keyContent = Instance.new("TextLabel", keyPopupFrame)
+			keyContent.Size = UDim2.new(0.9, 0, 0, 40)
+			keyContent.Position = UDim2.new(0.05, 0, 0, 40)
+			keyContent.BackgroundTransparency = 1
+			keyContent.Text = "lol777"
+			keyContent.TextColor3 = Color3.fromRGB(255, 200, 100)
+			keyContent.TextSize = 16
+			keyContent.Font = Enum.Font.GothamBold
+			keyContent.TextXAlignment = Enum.TextXAlignment.Center
+
+			local keyCopyBtn = Instance.new("TextButton", keyPopupFrame)
+			keyCopyBtn.Size = UDim2.new(0.8, 0, 0, 30)
+			keyCopyBtn.Position = UDim2.new(0.1, 0, 1, -40)
+			keyCopyBtn.BackgroundColor3 = Color3.fromRGB(230, 120, 20)
+			keyCopyBtn.BorderSizePixel = 0
+			keyCopyBtn.Text = "คัดลอก"
+			keyCopyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			keyCopyBtn.TextSize = 13
+			keyCopyBtn.Font = Enum.Font.GothamBold
+			keyCopyBtn.Active = true
+			Instance.new("UICorner", keyCopyBtn).CornerRadius = UDim.new(0, 6)
+
+			-- Drag logic for popup
+			local popupDragging, popupDragStart, popupStartPos = false, Vector2.new(), UDim2.new()
+			keyPopupHeader.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					popupDragging = true; popupDragStart = input.Position; popupStartPos = keyPopupFrame.Position
+					local connMove = UserInputService.InputChanged:Connect(function(inp)
+						if (inp.UserInputType == Enum.UserInputType.MouseMovement or inp.UserInputType == Enum.UserInputType.Touch) and popupDragging then
+							keyPopupFrame.Position = UDim2.new(popupStartPos.X.Scale, popupStartPos.X.Offset + (inp.Position.X - popupDragStart.X), popupStartPos.Y.Scale, popupStartPos.Y.Offset + (inp.Position.Y - popupDragStart.Y))
+						end
+					end)
+					local connEnd = UserInputService.InputEnded:Connect(function(inp)
+						if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then popupDragging = false; connMove:Disconnect(); connEnd:Disconnect() end
+					end)
+				end
+			end)
+		end
+
 		local function loadCategory(name)
 			clearContent()
 			for _, b in ipairs({btnGen, btnPlr, btnCombat, btnJoke, btnOther}) do
@@ -582,12 +673,12 @@ task.spawn(function()
 			elseif name == "🌐 สคริปต์เกมอื่น" then
 				btnOther.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnOther.TextColor3 = Color3.fromRGB(255, 180, 80)
 				
-				-- 🆕 NEW: +1 Speed Keyboard Escape Button
+				-- 🆕 NEW: +1 Speed Keyboard Escape Button (แสดง Key Popup)
 				local speedEscBtn = Instance.new("TextButton", contentScroll)
 				speedEscBtn.Size = UDim2.new(0.95, 0, 0, 45)
 				speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
 				speedEscBtn.BorderSizePixel = 0
-				speedEscBtn.Text = "+1 speed keyboard escape (คีย์: lol777)"
+				speedEscBtn.Text = "+1 speed keyboard escape"
 				speedEscBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 				speedEscBtn.TextSize = 14
 				speedEscBtn.Font = Enum.Font.GothamBold
@@ -598,11 +689,11 @@ task.spawn(function()
 					speedEscBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function()
 						pcall(function()
-						loadstring(game:HttpGet("https://raw.githubusercontent.com/lastxvc/-1-speed-keyboard/refs/heads/main/script"))()
+							showSpeedKeyPopup()
 						end)
 						task.wait(1.5)
 						if speedEscBtn and speedEscBtn.Parent then
-							speedEscBtn.Text = "+1 speed keyboard escape (คีย์: lol777)"
+							speedEscBtn.Text = "+1 speed keyboard escape"
 							speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
 						end
 					end)
@@ -633,7 +724,7 @@ task.spawn(function()
 				btnUpdate.BackgroundColor3 = Color3.fromRGB(50, 15, 5); btnUpdate.TextColor3 = Color3.fromRGB(255, 220, 150)
 				
 				local updateFrame = Instance.new("Frame", contentScroll)
-				updateFrame.Size = UDim2.new(0.95, 0, 0, 220)
+				updateFrame.Size = UDim2.new(0.95, 0, 0, 240)
 				updateFrame.BackgroundColor3 = Color3.fromRGB(30, 10, 3)
 				updateFrame.BorderSizePixel = 0
 				Instance.new("UICorner", updateFrame).CornerRadius = UDim.new(0, 8)
@@ -652,7 +743,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V0.9.5"
+				versionLbl.Text = "เวอร์ชัน: V0.9.6"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -669,10 +760,10 @@ task.spawn(function()
 				dateLbl.TextXAlignment = Enum.TextXAlignment.Left
 				
 				local changelogLbl = Instance.new("TextLabel", updateFrame)
-				changelogLbl.Size = UDim2.new(1, -20, 0, 95)
+				changelogLbl.Size = UDim2.new(1, -20, 0, 115)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.5:\n• เพิ่มปุ่ม '+1 speed keyboard escape' ในหมวด 🌐 สคริปต์เกมอื่น\n  → กดเพื่อโหลดสคริปต์เพิ่มความเร็วคีย์บอร์ด (Esc)\n• ปรับปรุง UI ให้รองรับปุ่มใหม่โดยไม่เลื่อนเกิน"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.6:\n• เพิ่มระบบแสดงคีย์แบบ Popup สำหรับ '+1 speed keyboard escape'\n  → กดปุ่มแล้วเด้งหน้าต่างเล็กแสดงคีย์ 'lol777'\n  → ลากย้ายหน้าต่างได้ / กด X ปิดได้\n• ลบคอมเม้นต์เตือนออกจากสคริปต์โหลดภายนอก"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -745,7 +836,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.5] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V0.9.6] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -859,7 +950,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.5 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.6 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
