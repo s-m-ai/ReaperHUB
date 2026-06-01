@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V1.0.1 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Catch and Tame Button Added
+-- Pumpkitz Hub 🎃 V1.0.2 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Camera View Buttons Added
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V10_1"
+		screenGui.Name = "PumpkitzHub_V10_2"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -69,7 +69,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V1.0.1"
+		title.Text = "Pumpkitz Hub 🎃 V1.0.2"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -169,7 +169,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V10_1"
+		tpScreenGui.Name = "PumpkitzHub_TP_V10_2"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -411,6 +411,62 @@ task.spawn(function()
 			end
 		end
 
+		-- === 🆕 CAMERA VIEW FUNCTIONS ===
+		local firstPersonActive = false
+		local thirdPersonActive = false
+		local originalZoomMin = 0.5
+		local originalZoomMax = 20
+		local cameraConn = nil
+
+		local function setFirstPersonView(state)
+			firstPersonActive = state
+			thirdPersonActive = not state
+			
+			if state then
+				-- ตั้งค่ากล้องบุคคลที่ 1
+				localPlayer.CameraMinZoomDistance = 0.5
+				localPlayer.CameraMaxZoomDistance = 0.5
+				
+				if cameraConn then cameraConn:Disconnect() end
+				cameraConn = RunService.RenderStepped:Connect(function()
+					if localPlayer.Character and localPlayer.Character:FindFirstChild("Head") and camera then
+						local head = localPlayer.Character.Head
+						camera.CFrame = CFrame.new(head.Position, head.Position + head.CFrame.LookVector * 10)
+					end
+				end)
+			else
+				-- คืนค่ากล้องปกติ
+				if cameraConn then cameraConn:Disconnect(); cameraConn = nil end
+				localPlayer.CameraMinZoomDistance = originalZoomMin
+				localPlayer.CameraMaxZoomDistance = originalZoomMax
+				if camera then
+					camera.CameraType = Enum.CameraType.Custom
+					if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
+						camera.CameraSubject = localPlayer.Character.Humanoid
+					end
+				end
+			end
+		end
+
+		local function setThirdPersonView(state)
+			thirdPersonActive = state
+			firstPersonActive = not state
+			
+			if state then
+				-- ตั้งค่ากล้องบุคคลที่ 3 (ค่าเริ่มต้นของ Roblox)
+				localPlayer.CameraMinZoomDistance = originalZoomMin
+				localPlayer.CameraMaxZoomDistance = originalZoomMax
+				
+				if cameraConn then cameraConn:Disconnect(); cameraConn = nil end
+				if camera then
+					camera.CameraType = Enum.CameraType.Custom
+					if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
+						camera.CameraSubject = localPlayer.Character.Humanoid
+					end
+				end
+			end
+		end
+
 		-- === UI MANAGEMENT ===
 		local function clearContent()
 			for _, child in pairs(contentScroll:GetChildren()) do if child:IsA("GuiObject") then child:Destroy() end end
@@ -563,10 +619,45 @@ task.spawn(function()
 			
 			if name == "ทั่วไป" then
 				btnGen.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnGen.TextColor3 = Color3.fromRGB(255, 180, 80)
+				
+				-- 🆕 NEW: Camera View Buttons
+				local cam1Btn = Instance.new("TextButton", contentScroll)
+				cam1Btn.Size = UDim2.new(0.95, 0, 0, 45)
+				cam1Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				cam1Btn.BorderSizePixel = 0
+				cam1Btn.Text = "ปรับกล้องมุมมองบุคคลที่1"
+				cam1Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+				cam1Btn.TextSize = 14
+				cam1Btn.Font = Enum.Font.GothamBold
+				cam1Btn.Active = true
+				Instance.new("UICorner", cam1Btn).CornerRadius = UDim.new(0, 8)
+				cam1Btn.MouseButton1Click:Connect(function()
+					setFirstPersonView(true)
+					cam1Btn.BackgroundColor3 = Color3.fromRGB(230, 120, 20)
+					cam3Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				end)
+				
+				local cam3Btn = Instance.new("TextButton", contentScroll)
+				cam3Btn.Size = UDim2.new(0.95, 0, 0, 45)
+				cam3Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				cam3Btn.BorderSizePixel = 0
+				cam3Btn.Text = "ปรับกล้องมุมมองบุคคลที่3"
+				cam3Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+				cam3Btn.TextSize = 14
+				cam3Btn.Font = Enum.Font.GothamBold
+				cam3Btn.Active = true
+				Instance.new("UICorner", cam3Btn).CornerRadius = UDim.new(0, 8)
+				cam3Btn.MouseButton1Click:Connect(function()
+					setThirdPersonView(true)
+					cam3Btn.BackgroundColor3 = Color3.fromRGB(230, 120, 20)
+					cam1Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
+				end)
+				
 				local lbl = Instance.new("TextLabel", contentScroll)
 				lbl.Size = UDim2.new(0.9, 0, 0, 60); lbl.BackgroundTransparency = 1
 				lbl.Text = "หมวดหมู่ทั่วไป\n(กำลังพัฒนา)"
 				lbl.TextColor3 = Color3.fromRGB(180, 180, 180); lbl.TextSize = 15; lbl.Font = Enum.Font.GothamSemibold; lbl.TextXAlignment = Enum.TextXAlignment.Center
+				
 			elseif name == "👤 player" then
 				btnPlr.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnPlr.TextColor3 = Color3.fromRGB(255, 180, 80)
 				createToggleBtn(contentScroll, "ESP 🟠 ", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleESP)
@@ -677,7 +768,6 @@ task.spawn(function()
 			elseif name == "🌐 สคริปต์เกมอื่น" then
 				btnOther.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnOther.TextColor3 = Color3.fromRGB(255, 180, 80)
 				
-				-- 🆕 NEW: Catch and Tame Button
 				local catchTameBtn = Instance.new("TextButton", contentScroll)
 				catchTameBtn.Size = UDim2.new(0.95, 0, 0, 45)
 				catchTameBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
@@ -773,7 +863,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V1.0.1"
+				versionLbl.Text = "เวอร์ชัน: V1.0.2"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -793,7 +883,7 @@ task.spawn(function()
 				changelogLbl.Size = UDim2.new(1, -20, 0, 115)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่ใน V1.0.1:\n• เพิ่มปุ่ม 'Catch and Tame' ในหมวด 🌐 สคริปต์เกมอื่น\n  → กดเพื่อโหลดสคริปต์จาก Vinzhub Loader\n  → ใช้สำหรับเกมแนวจับและฝึกสัตว์เลี้ยง\n• อัปเดตคำเตือนการใช้งานให้ครอบคลุมสคริปต์ใหม่"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V1.0.2:\n• เพิ่มปุ่มปรับกล้องในหมวด 'ทั่วไป':\n  → 'ปรับกล้องมุมมองบุคคลที่1': กล้องติดหัวตัวละคร เหมาะสำหรับการยิงปืนหรือเกมแนว FPS\n  → 'ปรับกล้องมุมมองบุคคลที่3': กล้องมาตรฐานของ Roblox เหมาะสำหรับการสำรวจทั่วไป\n• ปุ่มจะเปลี่ยนสีเมื่อใช้งานเพื่อแสดงสถานะปัจจุบัน"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -891,7 +981,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V1.0.1] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V1.0.2] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -1005,7 +1095,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V1.0.1 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V1.0.2 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
@@ -1044,4 +1134,3 @@ task.spawn(function()
 		showKeySystem()
 	end)
 end)
-
