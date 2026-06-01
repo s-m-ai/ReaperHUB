@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V1.0.3 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Fixed First Person Camera Shake
+-- Pumpkitz Hub 🎃 V1.0.4 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Fixed First Person Camera Auto-Rotation
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V10_3"
+		screenGui.Name = "PumpkitzHub_V10_4"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -69,7 +69,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V1.0.3"
+		title.Text = "Pumpkitz Hub 🎃 V1.0.4"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -169,7 +169,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V10_3"
+		tpScreenGui.Name = "PumpkitzHub_TP_V10_4"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -411,47 +411,36 @@ task.spawn(function()
 			end
 		end
 
-		-- === 🆕 CAMERA VIEW FUNCTIONS (Fixed Shake) ===
+		-- === 🆕 CAMERA VIEW FUNCTIONS (Fixed Auto-Rotation) ===
 		local firstPersonActive = false
 		local thirdPersonActive = false
 		local originalZoomMin = 0.5
 		local originalZoomMax = 20
 		local cameraConn = nil
-		local lastHeadCFrame = nil
 
 		local function setFirstPersonView(state)
 			firstPersonActive = state
 			thirdPersonActive = not state
 			
 			if state then
-				-- ตั้งค่ากล้องบุคคลที่ 1 (Fixed Shake)
-				localPlayer.CameraMinZoomDistance = 0.5
-				localPlayer.CameraMaxZoomDistance = 0.5
+				-- ตั้งค่ากล้องบุคคลที่ 1 (Fixed Auto-Turn)
+				localPlayer.CameraMinZoomDistance = 0
+				localPlayer.CameraMaxZoomDistance = 0
 				
 				if cameraConn then cameraConn:Disconnect() end
 				
-				-- ใช้ Heartbeat แทน RenderStepped เพื่อความเสถียร
-				cameraConn = RunService.Heartbeat:Connect(function()
+				-- ล็อกเฉพาะตำแหน่ง (Position) ไว้ที่หัวตัวละคร
+				-- รักษาการหมุน (Rotation) ตามนิ้ว/เมาส์ของผู้ใช้ ไม่ให้หันเอง
+				cameraConn = RunService.RenderStepped:Connect(function()
 					if localPlayer.Character and localPlayer.Character:FindFirstChild("Head") and camera then
 						local head = localPlayer.Character.Head
-						
-						-- คำนวณ CFrame ใหม่โดยมีการทำให้เรียบขึ้น
-						local targetCFrame = CFrame.new(head.Position, head.Position + head.CFrame.LookVector * 10)
-						
-						-- ใช้ Lerp เพื่อทำให้การเคลื่อนไหวเรียบขึ้น (ลดการสั่น)
-						if lastHeadCFrame then
-							camera.CFrame = lastHeadCFrame:Lerp(targetCFrame, 0.5)
-						else
-							camera.CFrame = targetCFrame
-						end
-						
-						lastHeadCFrame = targetCFrame
+						-- ตรึงตำแหน่งกล้องไว้ที่หัว + ใช้ทิศทางการมองปัจจุบันของผู้เล่น
+						camera.CFrame = CFrame.new(head.Position) * camera.CFrame.Rotation
 					end
 				end)
 			else
 				-- คืนค่ากล้องปกติ
 				if cameraConn then cameraConn:Disconnect(); cameraConn = nil end
-				lastHeadCFrame = nil
 				localPlayer.CameraMinZoomDistance = originalZoomMin
 				localPlayer.CameraMaxZoomDistance = originalZoomMax
 				if camera then
@@ -473,7 +462,6 @@ task.spawn(function()
 				localPlayer.CameraMaxZoomDistance = originalZoomMax
 				
 				if cameraConn then cameraConn:Disconnect(); cameraConn = nil end
-				lastHeadCFrame = nil
 				if camera then
 					camera.CameraType = Enum.CameraType.Custom
 					if localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then
@@ -512,10 +500,10 @@ task.spawn(function()
 		end
 
 		local btnGen = createCatBtn(catScroll, "ทั่วไป")
-		local btnPlr = createCatBtn(catScroll, "👤 player")
+		local btnPlr = createCatBtn(catScroll, " player")
 		local btnCombat = createCatBtn(catScroll, "⚔️ ต่อสู้")
 		local btnJoke = createCatBtn(catScroll, "🤡 แกล้ง")
-		local btnOther = createCatBtn(catScroll, "🌐 สคริปต์เกมอื่น")
+		local btnOther = createCatBtn(catScroll, " สคริปต์เกมอื่น")
 
 		local updateDivider = Instance.new("Frame", catScroll)
 		updateDivider.Size = UDim2.new(0.9, 0, 0, 2)
@@ -692,9 +680,9 @@ task.spawn(function()
 				local jumpBtn = Instance.new("TextButton", jumpRow); jumpBtn.Size = UDim2.new(0.35, 0, 1, 0); jumpBtn.BackgroundColor3 = Color3.fromRGB(200, 90, 15); jumpBtn.BorderSizePixel = 0; jumpBtn.Text = "ตกลง"; jumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255); jumpBtn.TextSize = 14; jumpBtn.Font = Enum.Font.GothamBold; jumpBtn.Active = true; Instance.new("UICorner", jumpBtn).CornerRadius = UDim.new(0, 6)
 				jumpBtn.MouseButton1Click:Connect(function() local v = tonumber(jumpBox.Text); if v and v > 0 and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then local h = localPlayer.Character.Humanoid; h.UseJumpPower = true; h.JumpPower = v; jumpBtn.Text = "✅ สำเร็จ"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) else jumpBtn.Text = "❌ ผิดพลาด"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) end end)
 
-				createToggleBtn(contentScroll, "Noclip 🚶‍️", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleNoclip)
+				createToggleBtn(contentScroll, "Noclip 🚶♂️", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleNoclip)
 				createToggleBtn(contentScroll, "กระโดดไม่จำกัด 🔄", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleInfJump)
-				createToggleBtn(contentScroll, "อมตะ 💀", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleImmortal)
+				createToggleBtn(contentScroll, "อมตะ ", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleImmortal)
 				
 				local invisibleBtn = Instance.new("TextButton", contentScroll)
 				invisibleBtn.Size = UDim2.new(0.95, 0, 0, 45)
@@ -726,7 +714,7 @@ task.spawn(function()
 				flyBtn.Text = "Fly (บิน)"; flyBtn.TextColor3 = Color3.fromRGB(255, 255, 255); flyBtn.TextSize = 15; flyBtn.Font = Enum.Font.GothamBold; flyBtn.Active = true
 				Instance.new("UICorner", flyBtn).CornerRadius = UDim.new(0, 8)
 				flyBtn.MouseButton1Click:Connect(function()
-					flyBtn.Text = "⏳ กำลังโหลด..."; flyBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					flyBtn.Text = " กำลังโหลด..."; flyBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-universal-fly-111281"))() end); task.wait(1.5); if flyBtn and flyBtn.Parent then flyBtn.Text = "Fly (บิน)"; flyBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
@@ -764,7 +752,7 @@ task.spawn(function()
 				Instance.new("UICorner", flingBtn).CornerRadius = UDim.new(0, 8)
 				flingBtn.MouseButton1Click:Connect(function()
 					flingBtn.Text = "⏳ กำลังโหลด..."; flingBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ultimate-fling-gui-228952"))() end); task.wait(1.5); if flingBtn and flingBtn.Parent then flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"; flingBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
+					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ultimate-fling-gui-228952"))() end); task.wait(1.5); if flingBtn and flingBtn.Parent then flingBtn.Text = " เปิด Fling GUI (ภายนอก)"; flingBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
 				local unanchorBtn = Instance.new("TextButton", contentScroll)
@@ -772,7 +760,7 @@ task.spawn(function()
 				unanchorBtn.Text = "ดึงพาร์ทที่ไม่ Anchor"; unanchorBtn.TextColor3 = Color3.fromRGB(255, 255, 255); unanchorBtn.TextSize = 15; unanchorBtn.Font = Enum.Font.GothamBold; unanchorBtn.Active = true
 				Instance.new("UICorner", unanchorBtn).CornerRadius = UDim.new(0, 8)
 				unanchorBtn.MouseButton1Click:Connect(function()
-					unanchorBtn.Text = "⏳ กำลังโหลด..."; unanchorBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					unanchorBtn.Text = " กำลังโหลด..."; unanchorBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Natural-Disaster-Survival-Super-ring-V4-24296"))() end); task.wait(1.5); if unanchorBtn and unanchorBtn.Parent then unanchorBtn.Text = "ดึงพาร์ทที่ไม่ Anchor"; unanchorBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
@@ -795,7 +783,7 @@ task.spawn(function()
 				catchTameBtn.Active = true
 				Instance.new("UICorner", catchTameBtn).CornerRadius = UDim.new(0, 8)
 				catchTameBtn.MouseButton1Click:Connect(function()
-					catchTameBtn.Text = "⏳ กำลังโหลด..."
+					catchTameBtn.Text = " กำลังโหลด..."
 					catchTameBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function()
 						pcall(function()
@@ -879,7 +867,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V1.0.3"
+				versionLbl.Text = "เวอร์ชัน: V1.0.4"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -899,7 +887,7 @@ task.spawn(function()
 				changelogLbl.Size = UDim2.new(1, -20, 0, 115)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่ใน V1.0.3:\n• แก้ไขปัญหากล้องบุคคลที่1สั่น:\n  → เปลี่ยนจาก RenderStepped เป็น Heartbeat (เสถียรกว่า)\n  → เพิ่มระบบ Lerp เพื่อทำให้การเคลื่อนไหวเรียบขึ้น\n  → บันทึก CFrame ก่อนหน้าเพื่อลดการกระตุก\n• ปรับปรุงประสิทธิภาพการทำงานของกล้อง"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V1.0.4:\n• แก้ไขปัญหากล้องบุคคลที่1หันเอง:\n  → เปลี่ยนระบบล็อกกล้อง: ตรึงเฉพาะตำแหน่ง(Position)ไว้ที่หัว\n  → รักษาการหมุน(Rotation)ตามการควบคุมของผู้เล่น 100%\n  → ตัดการติดตามทิศทางหัวตัวละครที่ gâyอาการหันเอง\n• ปรับปรุงความเสถียรและลดการใช้ทรัพยากร"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -997,7 +985,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V1.0.3] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V1.0.4] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -1111,7 +1099,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V1.0.3 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V1.0.4 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
