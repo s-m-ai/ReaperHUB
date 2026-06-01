@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V0.9.10 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Fixed Black Background on Minimize (Fade Out)
+-- Pumpkitz Hub 🎃 V1.0.0 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🎉 Update: V1.0.0 Release + Fixed Empty Categories
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V09_10"
+		screenGui.Name = "PumpkitzHub_V10_0"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -45,7 +45,6 @@ task.spawn(function()
 
 		Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 12)
 		
-		-- ✅ สร้างตัวแปร Stroke เพื่อใช้ Tween โปร่งใส
 		local mainStroke = Instance.new("UIStroke", mainFrame)
 		mainStroke.Color = Color3.fromRGB(255, 140, 0)
 		
@@ -70,7 +69,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V0.9.10"
+		title.Text = "Pumpkitz Hub 🎃 V1.0.0"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -170,7 +169,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V09_10"
+		tpScreenGui.Name = "PumpkitzHub_TP_V10_0"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -441,7 +440,7 @@ task.spawn(function()
 		end
 
 		local btnGen = createCatBtn(catScroll, "ทั่วไป")
-		local btnPlr = createCatBtn(catScroll, "👤 player")
+		local btnPlr = createCatBtn(catScroll, " player")
 		local btnCombat = createCatBtn(catScroll, "⚔️ ต่อสู้")
 		local btnJoke = createCatBtn(catScroll, "🤡 แกล้ง")
 		local btnOther = createCatBtn(catScroll, "🌐 สคริปต์เกมอื่น")
@@ -464,7 +463,7 @@ task.spawn(function()
 		btnUpdate.Active = true
 		Instance.new("UICorner", btnUpdate).CornerRadius = UDim.new(0, 6)
 
-		-- === 🆕 KEY POPUP GUI FOR +1 SPEED ===
+		-- ===  KEY POPUP GUI FOR +1 SPEED ===
 		local function showSpeedKeyPopup()
 			local keyPopupGui = Instance.new("ScreenGui")
 			keyPopupGui.Name = "Pumpkitz_SpeedKey_Popup"
@@ -584,13 +583,12 @@ task.spawn(function()
 				local jumpBox = Instance.new("TextBox", jumpRow); jumpBox.Size = UDim2.new(0.6, 0, 1, 0); jumpBox.BackgroundColor3 = Color3.fromRGB(35, 12, 4); jumpBox.BorderSizePixel = 0; jumpBox.Text = "50"; jumpBox.TextColor3 = Color3.fromRGB(255, 255, 255); jumpBox.TextSize = 14; jumpBox.Font = Enum.Font.GothamBold; jumpBox.PlaceholderText = "JumpPower"; jumpBox.ClearTextOnFocus = false; jumpBox.Active = true; Instance.new("UICorner", jumpBox).CornerRadius = UDim.new(0, 6)
 				jumpBox:GetPropertyChangedSignal("Text"):Connect(function() local c = string.gsub(jumpBox.Text, "%D", ""); if jumpBox.Text ~= c then local p = jumpBox.CursorPosition; jumpBox.Text = c; jumpBox.CursorPosition = math.min(p, #c + 1) end end)
 				local jumpBtn = Instance.new("TextButton", jumpRow); jumpBtn.Size = UDim2.new(0.35, 0, 1, 0); jumpBtn.BackgroundColor3 = Color3.fromRGB(200, 90, 15); jumpBtn.BorderSizePixel = 0; jumpBtn.Text = "ตกลง"; jumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255); jumpBtn.TextSize = 14; jumpBtn.Font = Enum.Font.GothamBold; jumpBtn.Active = true; Instance.new("UICorner", jumpBtn).CornerRadius = UDim.new(0, 6)
-				jumpBtn.MouseButton1Click:Connect(function() local v = tonumber(jumpBox.Text); if v and v > 0 and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then local h = localPlayer.Character.Humanoid; h.UseJumpPower = true; h.JumpPower = v; jumpBtn.Text = "✅ สำเร็จ"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) else jumpBtn.Text = " ผิดพลาด"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) end end)
+				jumpBtn.MouseButton1Click:Connect(function() local v = tonumber(jumpBox.Text); if v and v > 0 and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then local h = localPlayer.Character.Humanoid; h.UseJumpPower = true; h.JumpPower = v; jumpBtn.Text = "✅ สำเร็จ"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) else jumpBtn.Text = "❌ ผิดพลาด"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) end end)
 
 				createToggleBtn(contentScroll, "Noclip 🚶‍♂️", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleNoclip)
 				createToggleBtn(contentScroll, "กระโดดไม่จำกัด 🔄", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleInfJump)
 				createToggleBtn(contentScroll, "อมตะ 💀", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleImmortal)
 				
-				-- 🆕 NEW: Invisible Button (ล่องหน)
 				local invisibleBtn = Instance.new("TextButton", contentScroll)
 				invisibleBtn.Size = UDim2.new(0.95, 0, 0, 45)
 				invisibleBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
@@ -637,7 +635,7 @@ task.spawn(function()
 				hitboxExpBtn.Text = "ขยายhitbox"; hitboxExpBtn.TextColor3 = Color3.fromRGB(255, 255, 255); hitboxExpBtn.TextSize = 15; hitboxExpBtn.Font = Enum.Font.GothamBold; hitboxExpBtn.Active = true
 				Instance.new("UICorner", hitboxExpBtn).CornerRadius = UDim.new(0, 8)
 				hitboxExpBtn.MouseButton1Click:Connect(function()
-					hitboxExpBtn.Text = "⏳ กำลังโหลด..."; hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					hitboxExpBtn.Text = " กำลังโหลด..."; hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Hitbox-Expander-224681"))() end); task.wait(1.5); if hitboxExpBtn and hitboxExpBtn.Parent then hitboxExpBtn.Text = "ขยายhitbox"; hitboxExpBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
@@ -650,7 +648,7 @@ task.spawn(function()
 					task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/amdzy088/Kill-aura-slect-universal/refs/heads/main/Kill%20aura%20select%20universal'))() end); task.wait(1.5); if killAuraBtn and killAuraBtn.Parent then killAuraBtn.Text = "คิล ออร่า"; killAuraBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
-			elseif name == " แกล้ง" then
+			elseif name == "🤡 แกล้ง" then
 				btnJoke.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnJoke.TextColor3 = Color3.fromRGB(255, 180, 80)
 				
 				local flingBtn = Instance.new("TextButton", contentScroll)
@@ -658,7 +656,7 @@ task.spawn(function()
 				flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"; flingBtn.TextColor3 = Color3.fromRGB(255, 255, 255); flingBtn.TextSize = 15; flingBtn.Font = Enum.Font.GothamBold; flingBtn.Active = true
 				Instance.new("UICorner", flingBtn).CornerRadius = UDim.new(0, 8)
 				flingBtn.MouseButton1Click:Connect(function()
-					flingBtn.Text = "⏳ กำลังโหลด..."; flingBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+					flingBtn.Text = " กำลังโหลด..."; flingBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 					task.spawn(function() pcall(function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Ultimate-fling-gui-228952"))() end); task.wait(1.5); if flingBtn and flingBtn.Parent then flingBtn.Text = "🚀 เปิด Fling GUI (ภายนอก)"; flingBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
@@ -676,10 +674,9 @@ task.spawn(function()
 				note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 11; note.Font = Enum.Font.GothamSemibold
 				note.TextXAlignment = Enum.TextXAlignment.Left; note.TextWrapped = true
 				
-			elseif name == " สคริปต์เกมอื่น" then
+			elseif name == "🌐 สคริปต์เกมอื่น" then
 				btnOther.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnOther.TextColor3 = Color3.fromRGB(255, 180, 80)
 				
-				-- 🆕 NEW: +1 Speed Keyboard Escape Button (แสดง Key Popup + รันสคริปต์ทันที)
 				local speedEscBtn = Instance.new("TextButton", contentScroll)
 				speedEscBtn.Size = UDim2.new(0.95, 0, 0, 45)
 				speedEscBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6)
@@ -708,11 +705,11 @@ task.spawn(function()
 				
 				local mm2Btn = Instance.new("TextButton", contentScroll); mm2Btn.Size = UDim2.new(0.95, 0, 0, 45); mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); mm2Btn.BorderSizePixel = 0
 				mm2Btn.Text = "MM2"; mm2Btn.TextColor3 = Color3.fromRGB(255, 255, 255); mm2Btn.TextSize = 15; mm2Btn.Font = Enum.Font.GothamBold; mm2Btn.Active = true; Instance.new("UICorner", mm2Btn).CornerRadius = UDim.new(0, 8)
-				mm2Btn.MouseButton1Click:Connect(function() mm2Btn.Text = " กำลังโหลด..."; mm2Btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/M4VOWJ8IAKSR5WFRCCJ7AW5IW/ScrFr/refs/heads/main/MM2'))() end); task.wait(1.5); if mm2Btn and mm2Btn.Parent then mm2Btn.Text = "MM2"; mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
+				mm2Btn.MouseButton1Click:Connect(function() mm2Btn.Text = "⏳ กำลังโหลด..."; mm2Btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/M4VOWJ8IAKSR5WFRCCJ7AW5IW/ScrFr/refs/heads/main/MM2'))() end); task.wait(1.5); if mm2Btn and mm2Btn.Parent then mm2Btn.Text = "MM2"; mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
 				
 				local zombieBtn = Instance.new("TextButton", contentScroll); zombieBtn.Size = UDim2.new(0.95, 0, 0, 45); zombieBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); zombieBtn.BorderSizePixel = 0
 				zombieBtn.Text = "Survive zombie arena"; zombieBtn.TextColor3 = Color3.fromRGB(255, 255, 255); zombieBtn.TextSize = 15; zombieBtn.Font = Enum.Font.GothamBold; zombieBtn.Active = true; Instance.new("UICorner", zombieBtn).CornerRadius = UDim.new(0, 8)
-				zombieBtn.MouseButton1Click:Connect(function() zombieBtn.Text = "⏳ กำลังโหลด..."; zombieBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/VoidDeveloper67/Void-Hub/refs/heads/main/VoidHub.lua", true))() end); task.wait(1.5); if zombieBtn and zombieBtn.Parent then zombieBtn.Text = "Survive zombie arena"; zombieBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
+				zombieBtn.MouseButton1Click:Connect(function() zombieBtn.Text = " กำลังโหลด..."; zombieBtn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet("https://raw.githubusercontent.com/VoidDeveloper67/Void-Hub/refs/heads/main/VoidHub.lua", true))() end); task.wait(1.5); if zombieBtn and zombieBtn.Parent then zombieBtn.Text = "Survive zombie arena"; zombieBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
 				
 				local bfBtn = Instance.new("TextButton", contentScroll); bfBtn.Size = UDim2.new(0.95, 0, 0, 45); bfBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); bfBtn.BorderSizePixel = 0
 				bfBtn.Text = "BloxFruits"; bfBtn.TextColor3 = Color3.fromRGB(255, 255, 255); bfBtn.TextSize = 15; bfBtn.Font = Enum.Font.GothamBold; bfBtn.Active = true; Instance.new("UICorner", bfBtn).CornerRadius = UDim.new(0, 8)
@@ -750,7 +747,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V0.9.10"
+				versionLbl.Text = "เวอร์ชัน: V1.0.0"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -770,7 +767,7 @@ task.spawn(function()
 				changelogLbl.Size = UDim2.new(1, -20, 0, 115)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.10:\n• แก้ไขปัญหาพื้นหลังดำค้างขณะย่อเมนู\n  → เปลี่ยนระบบจากเลื่อนตำแหน่ง เป็น Fade Out โปร่งใส\n  → พื้นหลัง, เงา, และขอบ จะจางหายไปเหลือแค่ Header\n  → Header ยังคงลอยอยู่ที่เดิมไม่ขยับ\n• ปรับปรุงความลื่นไหลบนมือถือ"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V1.0.0:\n• 🎉 ออกเวอร์ชันทางการ V1.0.0!\n• แก้ไขปัญหาหมวด '🤡 แกล้ง' และ '🌐 สคริปต์เกมอื่น' เนื้อหาไม่แสดง\n• เพิ่มปุ่มทั้งหมดกลับเข้ามาครบถ้วน (Fling, MM2, BloxFruits ฯลฯ)\n• ปรับปรุงระบบย่อเมนูให้ Header คงที่ + Fade Out พื้นหลัง"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -868,7 +865,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.10] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V1.0.0] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -898,7 +895,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, 0, 0, 40)
 		title.Position = UDim2.new(0, 0, 0, 20)
 		title.BackgroundTransparency = 1
-		title.Text = " ใส่คีย์เพื่อปลดล็อก"
+		title.Text = "🔑 ใส่คีย์เพื่อปลดล็อก"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -982,7 +979,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.10 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V1.0.0 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
