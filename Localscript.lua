@@ -1,5 +1,5 @@
--- Pumpkitz Hub 🎃 V0.9.9 | Key System + 5s Loading + Max Immortal | Delta Optimized
--- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Header Fixed Position + Smooth Slide Animation
+-- Pumpkitz Hub 🎃 V0.9.10 | Key System + 5s Loading + Max Immortal | Delta Optimized
+-- 🔑 Key: ข้าวมันไก่ | 🆕 Update: Fixed Black Background on Minimize (Fade Out)
 
 task.spawn(function()
 	repeat task.wait() until game:IsLoaded()
@@ -17,7 +17,7 @@ task.spawn(function()
 		if not playerGui or not playerGui.Parent then return end
 		
 		local screenGui = Instance.new("ScreenGui")
-		screenGui.Name = "PumpkitzHub_V09_9"
+		screenGui.Name = "PumpkitzHub_V09_10"
 		screenGui.ResetOnSpawn = false
 		screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		screenGui.IgnoreGuiInset = true
@@ -44,7 +44,11 @@ task.spawn(function()
 		Instance.new("UICorner", shadow).CornerRadius = UDim.new(0, 12)
 
 		Instance.new("UICorner", mainFrame).CornerRadius = UDim.new(0, 12)
-		Instance.new("UIStroke", mainFrame).Color = Color3.fromRGB(255, 140, 0)
+		
+		-- ✅ สร้างตัวแปร Stroke เพื่อใช้ Tween โปร่งใส
+		local mainStroke = Instance.new("UIStroke", mainFrame)
+		mainStroke.Color = Color3.fromRGB(255, 140, 0)
+		
 		Instance.new("UIGradient", mainFrame).Color = ColorSequence.new({
 			ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 10, 3)),
 			ColorSequenceKeypoint.new(1, Color3.fromRGB(40, 15, 5))
@@ -55,7 +59,7 @@ task.spawn(function()
 		header.Size = UDim2.new(1, 0, 0, 40)
 		header.BackgroundColor3 = Color3.fromRGB(35, 12, 4)
 		header.BorderSizePixel = 0
-		header.ZIndex = 10 -- ✅ Header อยู่ด้านบนเสมอ
+		header.ZIndex = 10
 		Instance.new("UICorner", header).CornerRadius = UDim.new(0, 12)
 		Instance.new("UIGradient", header).Color = ColorSequence.new({
 			ColorSequenceKeypoint.new(0, Color3.fromRGB(60, 20, 6)),
@@ -66,7 +70,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, -85, 1, 0)
 		title.Position = UDim2.new(0, 12, 0, 0)
 		title.BackgroundTransparency = 1
-		title.Text = "Pumpkitz Hub 🎃 V0.9.9"
+		title.Text = "Pumpkitz Hub 🎃 V0.9.10"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -103,7 +107,7 @@ task.spawn(function()
 		splitContainer.BackgroundColor3 = Color3.fromRGB(20, 8, 2)
 		splitContainer.BorderSizePixel = 0
 		splitContainer.Active = true
-		splitContainer.ZIndex = 5 -- ✅ เนื้อหาอยู่ต่ำกว่า Header
+		splitContainer.ZIndex = 5
 
 		local catScroll = Instance.new("ScrollingFrame", splitContainer)
 		catScroll.Name = "CategoryList"
@@ -166,7 +170,7 @@ task.spawn(function()
 
 		-- === INDEPENDENT TELEPORT GUI ===
 		local tpScreenGui = Instance.new("ScreenGui")
-		tpScreenGui.Name = "PumpkitzHub_TP_V09_9"
+		tpScreenGui.Name = "PumpkitzHub_TP_V09_10"
 		tpScreenGui.ResetOnSpawn = false
 		tpScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 		tpScreenGui.IgnoreGuiInset = true
@@ -580,7 +584,7 @@ task.spawn(function()
 				local jumpBox = Instance.new("TextBox", jumpRow); jumpBox.Size = UDim2.new(0.6, 0, 1, 0); jumpBox.BackgroundColor3 = Color3.fromRGB(35, 12, 4); jumpBox.BorderSizePixel = 0; jumpBox.Text = "50"; jumpBox.TextColor3 = Color3.fromRGB(255, 255, 255); jumpBox.TextSize = 14; jumpBox.Font = Enum.Font.GothamBold; jumpBox.PlaceholderText = "JumpPower"; jumpBox.ClearTextOnFocus = false; jumpBox.Active = true; Instance.new("UICorner", jumpBox).CornerRadius = UDim.new(0, 6)
 				jumpBox:GetPropertyChangedSignal("Text"):Connect(function() local c = string.gsub(jumpBox.Text, "%D", ""); if jumpBox.Text ~= c then local p = jumpBox.CursorPosition; jumpBox.Text = c; jumpBox.CursorPosition = math.min(p, #c + 1) end end)
 				local jumpBtn = Instance.new("TextButton", jumpRow); jumpBtn.Size = UDim2.new(0.35, 0, 1, 0); jumpBtn.BackgroundColor3 = Color3.fromRGB(200, 90, 15); jumpBtn.BorderSizePixel = 0; jumpBtn.Text = "ตกลง"; jumpBtn.TextColor3 = Color3.fromRGB(255, 255, 255); jumpBtn.TextSize = 14; jumpBtn.Font = Enum.Font.GothamBold; jumpBtn.Active = true; Instance.new("UICorner", jumpBtn).CornerRadius = UDim.new(0, 6)
-				jumpBtn.MouseButton1Click:Connect(function() local v = tonumber(jumpBox.Text); if v and v > 0 and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then local h = localPlayer.Character.Humanoid; h.UseJumpPower = true; h.JumpPower = v; jumpBtn.Text = "✅ สำเร็จ"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) else jumpBtn.Text = "❌ ผิดพลาด"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) end end)
+				jumpBtn.MouseButton1Click:Connect(function() local v = tonumber(jumpBox.Text); if v and v > 0 and localPlayer.Character and localPlayer.Character:FindFirstChild("Humanoid") then local h = localPlayer.Character.Humanoid; h.UseJumpPower = true; h.JumpPower = v; jumpBtn.Text = "✅ สำเร็จ"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) else jumpBtn.Text = " ผิดพลาด"; task.delay(1, function() if jumpBtn then jumpBtn.Text = "ตกลง" end end) end end)
 
 				createToggleBtn(contentScroll, "Noclip 🚶‍♂️", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleNoclip)
 				createToggleBtn(contentScroll, "กระโดดไม่จำกัด 🔄", Color3.fromRGB(230, 120, 20), Color3.fromRGB(55, 18, 6), toggleInfJump)
@@ -646,7 +650,7 @@ task.spawn(function()
 					task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/amdzy088/Kill-aura-slect-universal/refs/heads/main/Kill%20aura%20select%20universal'))() end); task.wait(1.5); if killAuraBtn and killAuraBtn.Parent then killAuraBtn.Text = "คิล ออร่า"; killAuraBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end)
 				end)
 				
-			elseif name == "🤡 แกล้ง" then
+			elseif name == " แกล้ง" then
 				btnJoke.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnJoke.TextColor3 = Color3.fromRGB(255, 180, 80)
 				
 				local flingBtn = Instance.new("TextButton", contentScroll)
@@ -672,7 +676,7 @@ task.spawn(function()
 				note.TextColor3 = Color3.fromRGB(150, 150, 150); note.TextSize = 11; note.Font = Enum.Font.GothamSemibold
 				note.TextXAlignment = Enum.TextXAlignment.Left; note.TextWrapped = true
 				
-			elseif name == "🌐 สคริปต์เกมอื่น" then
+			elseif name == " สคริปต์เกมอื่น" then
 				btnOther.BackgroundColor3 = Color3.fromRGB(65, 20, 6); btnOther.TextColor3 = Color3.fromRGB(255, 180, 80)
 				
 				-- 🆕 NEW: +1 Speed Keyboard Escape Button (แสดง Key Popup + รันสคริปต์ทันที)
@@ -704,7 +708,7 @@ task.spawn(function()
 				
 				local mm2Btn = Instance.new("TextButton", contentScroll); mm2Btn.Size = UDim2.new(0.95, 0, 0, 45); mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); mm2Btn.BorderSizePixel = 0
 				mm2Btn.Text = "MM2"; mm2Btn.TextColor3 = Color3.fromRGB(255, 255, 255); mm2Btn.TextSize = 15; mm2Btn.Font = Enum.Font.GothamBold; mm2Btn.Active = true; Instance.new("UICorner", mm2Btn).CornerRadius = UDim.new(0, 8)
-				mm2Btn.MouseButton1Click:Connect(function() mm2Btn.Text = "⏳ กำลังโหลด..."; mm2Btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/M4VOWJ8IAKSR5WFRCCJ7AW5IW/ScrFr/refs/heads/main/MM2'))() end); task.wait(1.5); if mm2Btn and mm2Btn.Parent then mm2Btn.Text = "MM2"; mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
+				mm2Btn.MouseButton1Click:Connect(function() mm2Btn.Text = " กำลังโหลด..."; mm2Btn.BackgroundColor3 = Color3.fromRGB(100, 100, 100); task.spawn(function() pcall(function() loadstring(game:HttpGet('https://raw.githubusercontent.com/M4VOWJ8IAKSR5WFRCCJ7AW5IW/ScrFr/refs/heads/main/MM2'))() end); task.wait(1.5); if mm2Btn and mm2Btn.Parent then mm2Btn.Text = "MM2"; mm2Btn.BackgroundColor3 = Color3.fromRGB(55, 18, 6) end end) end)
 				
 				local zombieBtn = Instance.new("TextButton", contentScroll); zombieBtn.Size = UDim2.new(0.95, 0, 0, 45); zombieBtn.BackgroundColor3 = Color3.fromRGB(55, 18, 6); zombieBtn.BorderSizePixel = 0
 				zombieBtn.Text = "Survive zombie arena"; zombieBtn.TextColor3 = Color3.fromRGB(255, 255, 255); zombieBtn.TextSize = 15; zombieBtn.Font = Enum.Font.GothamBold; zombieBtn.Active = true; Instance.new("UICorner", zombieBtn).CornerRadius = UDim.new(0, 8)
@@ -746,7 +750,7 @@ task.spawn(function()
 				versionLbl.Size = UDim2.new(1, 0, 0, 25)
 				versionLbl.Position = UDim2.new(0, 0, 0, 45)
 				versionLbl.BackgroundTransparency = 1
-				versionLbl.Text = "เวอร์ชัน: V0.9.9"
+				versionLbl.Text = "เวอร์ชัน: V0.9.10"
 				versionLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
 				versionLbl.TextSize = 14
 				versionLbl.Font = Enum.Font.GothamSemibold
@@ -766,7 +770,7 @@ task.spawn(function()
 				changelogLbl.Size = UDim2.new(1, -20, 0, 115)
 				changelogLbl.Position = UDim2.new(0, 10, 0, 100)
 				changelogLbl.BackgroundTransparency = 1
-				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.9:\n• ปรับปรุงระบบย่อ/ขยาย (-): Header คงที่ตลอดเวลา\n  → ซ่อน: เนื้อหาเลื่อนขึ้นไปเหนือ Header อย่างนุ่มนวล\n  → แสดง: เนื้อหาเลื่อนลงมาจาก Header กลับสู่ตำแหน่งเดิม\n  → ใช้ TweenService บน Position + ZIndex จัดลำดับการแสดงผล\n• รองรับ UI ลื่นไหลโดยไม่กระทบตำแหน่งปุ่มและ Header"
+				changelogLbl.Text = "✨ สิ่งใหม่ใน V0.9.10:\n• แก้ไขปัญหาพื้นหลังดำค้างขณะย่อเมนู\n  → เปลี่ยนระบบจากเลื่อนตำแหน่ง เป็น Fade Out โปร่งใส\n  → พื้นหลัง, เงา, และขอบ จะจางหายไปเหลือแค่ Header\n  → Header ยังคงลอยอยู่ที่เดิมไม่ขยับ\n• ปรับปรุงความลื่นไหลบนมือถือ"
 				changelogLbl.TextColor3 = Color3.fromRGB(180, 180, 180)
 				changelogLbl.TextSize = 12
 				changelogLbl.Font = Enum.Font.Gotham
@@ -825,7 +829,7 @@ task.spawn(function()
 			end
 		end)
 
-		-- === 🆕 FIXED HEADER SMOOTH SLIDE ===
+		-- === 🆕 FIXED HEADER SMOOTH SLIDE + FADE OUT ===
 		local isMin = false
 		local slideTweenInfo = TweenInfo.new(0.35, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
 
@@ -834,15 +838,25 @@ task.spawn(function()
 			splitContainer.Visible = true -- ต้องเปิดไว้เพื่อให้ Tween ทำงาน
 
 			if isMin then
-				-- ย่อ: เนื้อหาเลื่อนขึ้นไปซ่อนเหนือ Header (Header คงที่)
+				-- ย่อ: เนื้อหาเลื่อนขึ้นไปซ่อนเหนือ Header + Fade Out พื้นหลัง
 				TweenService:Create(splitContainer, slideTweenInfo, {
 					Position = UDim2.new(0, 0, 0, -220)
 				}):Play()
+				
+				-- Fade out พื้นหลังหลัก, เงา, และขอบ
+				TweenService:Create(mainFrame, slideTweenInfo, {BackgroundTransparency = 1}):Play()
+				TweenService:Create(shadow, slideTweenInfo, {BackgroundTransparency = 1}):Play()
+				TweenService:Create(mainStroke, slideTweenInfo, {Transparency = 1}):Play()
 			else
-				-- ขยาย: เนื้อหาเลื่อนลงมาจาก Header กลับสู่ตำแหน่งเดิม
+				-- ขยาย: เนื้อหาเลื่อนลงมาจาก Header + Fade In พื้นหลัง
 				TweenService:Create(splitContainer, slideTweenInfo, {
 					Position = UDim2.new(0, 0, 0, 40)
 				}):Play()
+				
+				-- Fade in พื้นหลังหลัก, เงา, และขอบ
+				TweenService:Create(mainFrame, slideTweenInfo, {BackgroundTransparency = 0}):Play()
+				TweenService:Create(shadow, slideTweenInfo, {BackgroundTransparency = 0.65}):Play()
+				TweenService:Create(mainStroke, slideTweenInfo, {Transparency = 0}):Play()
 			end
 		end)
 
@@ -854,7 +868,7 @@ task.spawn(function()
 			if not screenGui.Parent then toggleESP(false); toggleShowHitbox(false); toggleAimlock(false); toggleNoclip(false); toggleInfJump(false); toggleImmortal(false) end
 		end)
 
-		print("[Pumpkitz Hub 🎃 V0.9.9] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
+		print("[Pumpkitz Hub 🎃 V0.9.10] โหลดสำเร็จ | Key System + Max Immortal | Delta Optimized")
 	end
 
 	-- === KEY SYSTEM FUNCTION ===
@@ -884,7 +898,7 @@ task.spawn(function()
 		title.Size = UDim2.new(1, 0, 0, 40)
 		title.Position = UDim2.new(0, 0, 0, 20)
 		title.BackgroundTransparency = 1
-		title.Text = "🔑 ใส่คีย์เพื่อปลดล็อก"
+		title.Text = " ใส่คีย์เพื่อปลดล็อก"
 		title.TextColor3 = Color3.fromRGB(255, 255, 255)
 		title.TextSize = 18
 		title.Font = Enum.Font.GothamBold
@@ -968,7 +982,7 @@ task.spawn(function()
 
 	local loadingVersion = Instance.new("TextLabel", loadingFrame)
 	loadingVersion.Size = UDim2.new(1, 0, 0, 30); loadingVersion.Position = UDim2.fromScale(0.5, 0.42); loadingVersion.AnchorPoint = Vector2.new(0.5, 0.5)
-	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.9 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
+	loadingVersion.BackgroundTransparency = 1; loadingVersion.Text = "V0.9.10 | Delta Optimized"; loadingVersion.TextColor3 = Color3.fromRGB(200, 200, 200)
 	loadingVersion.TextSize = 16; loadingVersion.Font = Enum.Font.GothamSemibold; loadingVersion.TextXAlignment = Enum.TextXAlignment.Center
 
 	local loadingBar = Instance.new("Frame", loadingFrame); loadingBar.Name = "LoadingBar"
